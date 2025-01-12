@@ -1,0 +1,65 @@
+*{
+  font-family: "Shrikhand", serif;
+  font-weight: 400;
+  font-style: normal;
+  /* color: RGB(20, 112, 175); */
+  position: relative;
+}
+.container{
+  background-image: url('images/beach\ front\ cafeteria\ \ in\ famous\ hotel\ .jpg');
+  height: 38rem;
+  color: RGB(20, 112, 175);
+}
+
+li{
+  list-style-type: none;
+}
+li:hover{
+color: white;
+}
+.hero{
+  margin-top: 7rem;
+}
+td{
+  text-align: center;
+}
+th{
+  color: RGB(20, 112, 175);
+}
+form input {
+  margin-top: 1rem;
+}
+/* {
+  background-image:url('beach\ front\ cafeteria\ \ in\ famous\ hotel\ .jpg') ;
+  height: 30rem;
+  
+} */
+
+/* header{
+  background-image: url('beach\ front\ cafeteria\ \ in\ famous\ hotel\ .jpg');
+  height: 35rem;
+}
+ ul{
+  display: grid;
+ }
+li{
+  list-style-type: none;
+  display: inline-block;
+} 
+header .icon-cart span{
+  position: absolute;
+  background-color: red;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: #fff;
+  /* top: 50%;
+  right: 20px; */
+  /* right: 5rem; 
+  top:1rem ;
+  cursor: pointer;
+}  */
+
