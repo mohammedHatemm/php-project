@@ -1,0 +1,196 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Espresso",
+      "price": 3.50,
+      "category": "hot",
+      "image": "espresso.jpg",
+      "description": "Rich and concentrated coffee shot"
+    },
+    {
+      "id": 2,
+      "name": "Cappuccino",
+      "price": 4.50,
+      "category": "hot",
+      "image": "cappuccino.jpg",
+      "description": "Espresso with steamed milk and foam"
+    },
+    {
+      "id": 3,
+      "name": "Cafe Latte",
+      "price": 4.00,
+      "category": "hot",
+      "image": "latte.jpg",
+      "description": "Espresso with steamed milk"
+    },
+    {
+      "id": 4,
+      "name": "Hot Chocolate",
+      "price": 4.00,
+      "category": "hot",
+      "image": "hot-chocolate.jpg",
+      "description": "Rich chocolate with steamed milk"
+    },
+    {
+      "id": 5,
+      "name": "Green Tea",
+      "price": 3.00,
+      "category": "hot",
+      "image": "green-tea.jpg",
+      "description": "Traditional Japanese green tea"
+    },
+    {
+      "id": 6,
+      "name": "Chai Tea Latte",
+      "price": 4.50,
+      "category": "hot",
+      "image": "chai-latte.jpg",
+      "description": "Spiced tea with steamed milk"
+    },
+    {
+      "id": 7,
+      "name": "Mocha",
+      "price": 5.00,
+      "category": "hot",
+      "image": "mocha.jpg",
+      "description": "Espresso with chocolate and steamed milk"
+    },
+    {
+      "id": 8,
+      "name": "Americano",
+      "price": 3.50,
+      "category": "hot",
+      "image": "americano.jpg",
+      "description": "Espresso with hot water"
+    },
+    {
+      "id": 9,
+      "name": "Caramel Macchiato",
+      "price": 5.00,
+      "category": "hot",
+      "image": "caramel-macchiato.jpg",
+      "description": "Espresso with vanilla and caramel"
+    },
+    {
+      "id": 10,
+      "name": "Iced Coffee",
+      "price": 4.00,
+      "category": "cold",
+      "image": "iced-coffee.jpg",
+      "description": "Chilled coffee with ice"
+    },
+    {
+      "id": 11,
+      "name": "Frappuccino",
+      "price": 5.50,
+      "category": "cold",
+      "image": "frappuccino.jpg",
+      "description": "Blended coffee with ice and cream"
+    },
+    {
+      "id": 12,
+      "name": "Iced Tea",
+      "price": 3.50,
+      "category": "cold",
+      "image": "iced-tea.jpg",
+      "description": "Chilled tea with ice"
+    },
+    {
+      "id": 13,
+      "name": "Lemonade",
+      "price": 3.50,
+      "category": "cold",
+      "image": "lemonade.jpg",
+      "description": "Fresh squeezed lemonade"
+    },
+    {
+      "id": 14,
+      "name": "Smoothie",
+      "price": 5.00,
+      "category": "cold",
+      "image": "smoothie.jpg",
+      "description": "Fresh fruit smoothie"
+    },
+    {
+      "id": 15,
+      "name": "Milkshake",
+      "price": 5.50,
+      "category": "cold",
+      "image": "milkshake.jpg",
+      "description": "Creamy milkshake"
+    },
+    {
+      "id": 16,
+      "name": "Iced Mocha",
+      "price": 5.00,
+      "category": "cold",
+      "image": "iced-mocha.jpg",
+      "description": "Chilled mocha with ice"
+    },
+    {
+      "id": 17,
+      "name": "Cold Brew",
+      "price": 4.50,
+      "category": "cold",
+      "image": "cold-brew.jpg",
+      "description": "Slow-steeped cold coffee"
+    },
+    {
+      "id": 18,
+      "name": "Iced Latte",
+      "price": 4.50,
+      "category": "cold",
+      "image": "iced-latte.jpg",
+      "description": "Chilled latte with ice"
+    },
+    {
+      "id": 19,
+      "name": "Chocolate Cake",
+      "price": 6.00,
+      "category": "dessert",
+      "image": "chocolate-cake.jpg",
+      "description": "Rich chocolate layer cake"
+    },
+    {
+      "id": 20,
+      "name": "Cheesecake",
+      "price": 6.50,
+      "category": "dessert",
+      "image": "cheesecake.jpg",
+      "description": "New York style cheesecake"
+    },
+    {
+      "id": 21,
+      "name": "Apple Pie",
+      "price": 5.50,
+      "category": "dessert",
+      "image": "apple-pie.jpg",
+      "description": "Homemade apple pie"
+    },
+    {
+      "id": 22,
+      "name": "Tiramisu",
+      "price": 6.50,
+      "category": "dessert",
+      "image": "tiramisu.jpg",
+      "description": "Classic Italian dessert"
+    },
+    {
+      "id": 23,
+      "name": "Brownie",
+      "price": 4.50,
+      "category": "dessert",
+      "image": "brownie.jpg",
+      "description": "Chocolate fudge brownie"
+    },
+    {
+      "id": 24,
+      "name": "Ice Cream",
+      "price": 4.00,
+      "category": "dessert",
+      "image": "ice-cream.jpg",
+      "description": "Assorted ice cream flavors"
+    }
+  ]
+} 
