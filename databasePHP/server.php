@@ -1,6 +1,4 @@
- <?php
-
-
+<?php
 
 
 require_once "connection.php";
@@ -79,7 +77,7 @@ if (isset($_POST["btnLogin"])) {
         session_start();
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["username"] = $result["username"];
-        header("location: ../login/profile.php");
+        header("location:../main-page/main.html");
         exit();
     } else {
         header("location:../login/login.php?message=" . urlencode("Invalid email or password, please try again"));
