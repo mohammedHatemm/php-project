@@ -9,6 +9,8 @@ if (isset($_POST["registerBtn"])) {
     $userPassword = $_POST["userpassword"] ?? null;
     $userEmail = $_POST["useremail"] ?? null;
     $userPhone = $_POST["userphone"] ?? null;
+    $userRole = $_POST["role"] ?? null;
+    $userImg = $_FILES["userimg"] ?? null;
     $encryptedPassword = md5($userPassword);
 
     // Check if email already exists
@@ -22,6 +24,9 @@ if (isset($_POST["registerBtn"])) {
         header("location:../regester/register.php
         ?message=" . urlencode("Email already exists"));
         exit();
+    }
+    if ($userpassword !== $confirmPassword) {
+        die("Passwords do not match.");
     }
 
     // Validate name
@@ -46,17 +51,9 @@ if (isset($_POST["registerBtn"])) {
         exit();
     }
 
-    // Insert new user
-    $query = "INSERT INTO users (username, password, email, phone) VALUES (:userName, :userPassword, :userEmail, :userPhone)";
-    $statement = $connection->prepare($query);
-    $statement->bindParam(':userName', $userName);
-    $statement->bindParam(':userPassword', $encryptedPassword);
-    $statement->bindParam(':userEmail', $userEmail);
-    $statement->bindParam(':userPhone', $userPhone);
-    $statement->execute();
 
-    header("location:../login/login.php?message=" . urlencode("Your account created successfully"));
-    exit();
+
+require_once '../UPLOAD-imge/upload_image_user.php';
 }
 
 // Login

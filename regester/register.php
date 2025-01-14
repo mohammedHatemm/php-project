@@ -28,14 +28,32 @@
             <div class="form-group">
                 <label for="userpassword">Password:</label>
                 <input type="password" id="userpassword" name="userpassword" required />
+                <i class="ri-lock-line"></i>
             </div>
+            <div class="form-group">
+                <label for="confirmpassword">Confirm Password</label>
+                      <input type="password" id="confirmpassword" name="confirmpassword" placeholder=" " required>
+                      <i class="ri-lock-line"></i>
+                  </div>
             <div class="form-group">
                 <label for="userphone">Phone:</label>
                 <input type="text" id="userphone" name="userphone" required />
             </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select name="role" id="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="profile_image">Profile Image:</label>
+                <input type="file" id="profile_image" name="userimg" accept="image/*"  />
+            </div>
             <button type="submit" name="registerBtn" class="submit-btn">Register</button>
+
         </form>
-        <p>Already have an account? <a href="login.html">Login here</a></p>
+        <p>Already have an account? <a href="../login/login.php">Login here</a></p>
     </div>
 </body>
 </html>
