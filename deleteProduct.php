@@ -1,7 +1,7 @@
 <?php
 // بدء الجلسة
 session_start();
-$categories = ["Beverages", "Snacks", "Desserts"];
+$categories = ["Beveragees", "snacks", "Desserts"];
 // إذا لم تكن مصفوفة المنتجات موجودة في الجلسة، قم بإنشائها
 if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [];

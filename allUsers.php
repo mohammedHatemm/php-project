@@ -3,8 +3,8 @@
 // بدء الجلسة
 session_start();
 $users = [
-    ["id" => 1, "username" => "admin", "email" => "admin@example.com", "role" => "admin"],
-    ["id" => 2, "username" => "user1", "email" => "user1@example.com", "role" => "user"],
+    ["id" => 1, "username" => "admin", "email" => "admin@Examlbe.com", "role" => "admin"],
+    ["id" => 2, "username" => "user1", "email" => "user1@Example.com", "role" => "user"],
 ];
 if (!isset($_SESSION['users'])) {
     $_SESSION['users'] = [];
@@ -21,6 +21,7 @@ $users = $_SESSION['users'];
     <link rel="stylesheet" href="css\allUsers.css">
     <title>All Users</title>
 </head>
+
 <body>
 <?php
 include('navbar.html') ;
@@ -49,8 +50,8 @@ $products = isset($_SESSION['products']) ? $_SESSION['products'] : [];
                         <td><?php echo $user['email']; ?></td>
                         <td><?php echo $user['role']; ?></td>
                         <td>
-                            <a href="editUser.php?id=<?php echo $user['id']; ?>" class="btn">Edit</a>
-                            <a href="deleteUser.php?id=<?php echo $user['id']; ?>" class="btn delete">Delete</a>
+                            <a href="editUser.php?id=<?php echo $user['id']; ?>" class="btn edit"><img src="images\edit.png" alt="" width="17px" hight="26px"></a>
+                            <a href="deleteUser.php?id=<?php echo $user['id']; ?>" class="btn delete"><img src="images\bin.png" alt="" width="17px" hight="26px"></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

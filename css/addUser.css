@@ -22,7 +22,7 @@ form {
 label {
     margin-bottom: 8px;
     font-weight: bold;
-    color: #555;
+    color: #87CEEB;
 }
 
 input[type="text"],
@@ -38,7 +38,7 @@ select {
 
 button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #87CEEB;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -47,5 +47,9 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #87CEEB;
+}
+
+.btn{
+    background-color: #87CEEB;
 }
