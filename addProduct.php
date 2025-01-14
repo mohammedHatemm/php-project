@@ -1,7 +1,7 @@
 
 
 <?php
-// بدء الجلسة
+
 session_start();
 
 $categories = ["Beverages", "Snacks", "Desserts"];
@@ -9,7 +9,6 @@ if (!isset($_SESSION['categories'])) {
     $_SESSION['categories'] = ["Beverages", "Snacks", "Desserts"];
 }
 
-// استرجاع بيانات الفئات من الجلسة
 $categories = $_SESSION['categories'];
 ?>
 
@@ -25,7 +24,7 @@ $categories = $_SESSION['categories'];
 <?php
  include('navbar.html') ;
 include('header.php');
-// بيانات وهمية للمنتجات
+
 $products = isset($_SESSION['products']) ? $_SESSION['products'] : [];
 ?>
     <div class="container">

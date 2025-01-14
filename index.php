@@ -1,6 +1,6 @@
 
 <?php
-// بدء الجلسة
+
 session_start();
 $products = [
     ["id" => 1, "name" => "Coffee", "category" => "Beverages", "price" => 10.50],
@@ -10,7 +10,6 @@ if (!isset($_SESSION['products'])) {
     $_SESSION['products'] = [];
 }
 
-// استرجاع بيانات المنتجات من الجلسة
 $products = $_SESSION['products'];
 ?>
 
@@ -27,7 +26,7 @@ $products = $_SESSION['products'];
 <?php
 include('navbar.html') ;
 include('header.php');
-// بيانات وهمية للمنتجات
+
 $products = isset($_SESSION['products']) ? $_SESSION['products'] : [];
 ?>
     <div class="container">

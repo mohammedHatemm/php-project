@@ -10,7 +10,7 @@
 <?php
  include('navbar.html') ;
 include('header.php');
-// بيانات وهمية للمنتجات
+
 $products = isset($_SESSION['products']) ? $_SESSION['products'] : [];
 ?>
     <div class="container">
