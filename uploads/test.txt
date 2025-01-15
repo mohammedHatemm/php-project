@@ -1,0 +1,8 @@
+
+        "product_id": 1,
+        "productName": "Espresso",
+        "price": "3.50",
+        "category": "hot",
+        "product_description": "Rich and concentrated coffee shot",
+        "product_img": "C:\\Users\\Falcon\\Desktop\\project php\\product-img\\espresso.jpg"
+    },

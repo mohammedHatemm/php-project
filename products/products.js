@@ -4,7 +4,7 @@ let currentFilter = "all";
 // تحميل المنتجات من ملف JSON
 async function loadProducts() {
   try {
-    const response = await fetch("products.json");
+    const response = await fetch("http://localhost/apis/get_products.php");
     const data = await response.json();
     products = data.products;
     displayProducts(products);
@@ -22,15 +22,21 @@ function displayProducts(productsToShow) {
     const productCard = `
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="product-card">
-                    <img src="${product.image}" class="product-image w-100" alt="${
-      product.name
+                    <img src="${
+                      product.product_imag
+                    }" class="product-image w-100" alt="${
+      products.productName
     }">
                     <div class="product-body">
-                        <h5 class="product-title">${product.name}</h5>
-                        <p class="product-description">${product.description}</p>
-                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <h5 class="product-title">${products.productName}</h5>
+                        <p class="product-description">${
+                          products.Product_description
+                        }</p>
+                        <div class="product-price">$${products.price.toFixed(
+                          2
+                        )}</div>
                         <button class="btn btn-primary w-100" onclick="addToCart(${
-                          product.id
+                          product.product_id
                         })">
                             Add to Cart
                             <i class="fas fa-plus ms-2"></i>
@@ -49,7 +55,7 @@ function filterProducts(category) {
   const filteredProducts =
     category === "all"
       ? products
-      : products.filter((product) => product.category === category);
+      : products.filter((product) => products.category === category);
   displayProducts(filteredProducts);
 
   // تحديث حالة الأزرار النشطة
@@ -72,10 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // وظائف سلة التسوق
 let cart = [];
 
-function addToCart(productId) {
-  const product = products.find((p) => p.id === productId);
+function addToCart(product_Id) {
+  const product = products.find((p) => p.id === product_Id);
   if (product) {
-    const existingItem = cart.find((item) => item.id === productId);
+    const existingItem = cart.find((item) => item.id === product_Id);
     if (existingItem) {
       existingItem.quantity += 1;
     } else {
@@ -85,20 +91,20 @@ function addToCart(productId) {
   }
 }
 
-function removeFromCart(productId) {
-  const index = cart.findIndex((item) => item.id === productId);
+function removeFromCart(product_Id) {
+  const index = cart.findIndex((item) => item.id === product_Id);
   if (index > -1) {
     cart.splice(index, 1);
     updateCartDisplay();
   }
 }
 
-function updateQuantity(productId, change) {
-  const item = cart.find((item) => item.id === productId);
+function updateQuantity(product_Id, change) {
+  const item = cart.find((item) => item.id === product_Id);
   if (item) {
     item.quantity += change;
     if (item.quantity <= 0) {
-      removeFromCart(productId);
+      removeFromCart(product_Id);
     } else {
       updateCartDisplay();
     }
@@ -178,7 +184,10 @@ function updateCartOverlay() {
   const cartTotalOverlay = document.getElementById("cart-total-overlay");
 
   // تحديث عدد العناصر
-  cartCountOverlay.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  cartCountOverlay.textContent = cart.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
 
   // تحديث المحتوى
   cartItemsOverlay.innerHTML = cart

@@ -5,7 +5,7 @@ let cart = [];
 const loadMenuItems = () => {
   return new Promise((resolve, reject) => {
     // Simulating AJAX call
-    fetch("api/menu-items")
+    fetch("http://localhost/apis/get_products.php")
       .then((response) => response.json())
       .then((data) => resolve(data))
       .catch((error) => reject(error));
