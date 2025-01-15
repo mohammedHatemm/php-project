@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,7 @@
             echo "<p class='alert alert-info'>" . htmlspecialchars($_GET["message"]) . "</p>";
         }
         ?>
-        <form action="../databasePHP/server.php" method="POST">
+        <form action="../databasePHP/server.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required />
@@ -28,13 +27,11 @@
             <div class="form-group">
                 <label for="userpassword">Password:</label>
                 <input type="password" id="userpassword" name="userpassword" required />
-                <i class="ri-lock-line"></i>
             </div>
             <div class="form-group">
                 <label for="confirmpassword">Confirm Password</label>
-                      <input type="password" id="confirmpassword" name="confirmpassword" placeholder=" " required>
-                      <i class="ri-lock-line"></i>
-                  </div>
+                <input type="password" id="confirmpassword" name="confirmpassword" required />
+            </div>
             <div class="form-group">
                 <label for="userphone">Phone:</label>
                 <input type="text" id="userphone" name="userphone" required />
@@ -48,10 +45,9 @@
             </div>
             <div class="form-group">
                 <label for="profile_image">Profile Image:</label>
-                <input type="file" id="profile_image" name="userimg" accept="image/*"  />
+                <input type="file" id="profile_image" name="userimg" accept="image/*" required />
             </div>
             <button type="submit" name="registerBtn" class="submit-btn">Register</button>
-
         </form>
         <p>Already have an account? <a href="../login/login.php">Login here</a></p>
     </div>

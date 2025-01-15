@@ -1,68 +1,93 @@
 <?php
-
-
-require_once "connection.php";
+session_start();
+require_once "../databasePHP/connection.php"; // تأكد من أن هذا الملف يحتوي على اتصال قاعدة البيانات
 
 // Register (Signup)
 if (isset($_POST["registerBtn"])) {
     $userName = $_POST["username"] ?? null;
     $userPassword = $_POST["userpassword"] ?? null;
+    $confirmPassword = $_POST["confirmpassword"] ?? null;
     $userEmail = $_POST["useremail"] ?? null;
     $userPhone = $_POST["userphone"] ?? null;
     $userRole = $_POST["role"] ?? null;
     $userImg = $_FILES["userimg"] ?? null;
-    $encryptedPassword = md5($userPassword);
 
-    // Check if email already exists
-    $checkEmail = "SELECT * FROM users WHERE email = :userEmail";
-    $statement = $connection->prepare($checkEmail);
-    $statement->bindParam(':userEmail', $userEmail);
-    $statement->execute();
-    $result = $statement->fetch(PDO::FETCH_ASSOC);
-
-    if ($result) {
-        header("location:../regester/register.php
-        ?message=" . urlencode("Email already exists"));
-        exit();
-    }
-    if ($userpassword !== $confirmPassword) {
-        die("Passwords do not match.");
-    }
-
-    // Validate name
-    $namePattern = "/^[a-zA-Z ]{3,}$/";
-    if (!preg_match($namePattern, $userName)) {
-        header("location: ../regester/register.php?message=" . urlencode("Invalid username, please enter a name with at least 3 characters"));
+    // التحقق من تطابق كلمة المرور
+    if ($userPassword !== $confirmPassword) {
+        header("location: ../regester/register.php?message=" . urlencode("Passwords do not match."));
         exit();
     }
 
-    // Validate email
+    // التحقق من صحة البريد الإلكتروني
     if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-        header("location: ../regester/register.php?message=" . urlencode("Your email is incorrect, check your email and try again"));
+        header("location: ../regester/register.php?message=" . urlencode("Invalid email format."));
         exit();
     }
 
-    // Validate password
-    $passwordPattern = "/^[1-9]{5,}$/";
-    if (!preg_match($passwordPattern, $userPassword)) {
-        // header("location: ../public/register.html?message=" . urlencode("Invalid password, please enter a password with at least 5 numbers"));
-        // exit();
-        header("location:../regester/register.php?message=" . urlencode("Invalid password, please enter a password with at least 5 numbers"));
+    // التحقق من صحة الصورة
+    if (isset($userImg) && $userImg["error"] == 0) {
+        $allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+        $fileType = $userImg["type"];
+
+        if (in_array($fileType, $allowedTypes)) {
+            $uploadDir = "../uploads/";
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            $fileName = uniqid() . "_" . basename($userImg["name"]);
+            $uploadFilePath = $uploadDir . $fileName;
+
+            if (move_uploaded_file($userImg["tmp_name"], $uploadFilePath)) {
+                // Hash password
+                $hashedPassword = password_hash($userPassword, PASSWORD_DEFAULT);
+
+                // التحقق من وجود المستخدم مسبقًا
+                $checkQuery = "SELECT * FROM users WHERE email = :userEmail OR username = :userName";
+                $checkStatement = $connection->prepare($checkQuery);
+                $checkStatement->bindParam(':userEmail', $userEmail);
+                $checkStatement->bindParam(':userName', $userName);
+                $checkStatement->execute();
+
+                if ($checkStatement->rowCount() > 0) {
+                    header("location: ../regester/register.php?message=" . urlencode("User with this email or username already exists."));
+                    exit();
+                } else {
+                    // إدخال المستخدم الجديد في قاعدة البيانات
+                    $query = "INSERT INTO users (username, password, email, phone, role, user_img) VALUES (:userName, :userPassword, :userEmail, :userPhone, :userRole, :userImg)";
+                    $statement = $connection->prepare($query);
+                    $statement->bindParam(':userName', $userName);
+                    $statement->bindParam(':userPassword', $hashedPassword);
+                    $statement->bindParam(':userEmail', $userEmail);
+                    $statement->bindParam(':userPhone', $userPhone);
+                    $statement->bindParam(':userRole', $userRole);
+                    $statement->bindParam(':userImg', $uploadFilePath);
+                    $statement->execute();
+
+                    header("location: ../regester/register.php?message=" . urlencode("Image uploaded and account created successfully!"));
+                    exit();
+                }
+            } else {
+                header("location: ../regester/register.php?message=" . urlencode("Failed to upload image."));
+                exit();
+            }
+        } else {
+            header("location: ../regester/register.php?message=" . urlencode("Invalid file type. Only JPEG, PNG, and GIF are allowed."));
+            exit();
+        }
+    } else {
+        header("location: ../regester/register.php?message=" . urlencode("Please upload a profile image."));
         exit();
     }
-
-
-
-require_once '../UPLOAD-imge/upload_image_user.php';
 }
 
 // Login
 if (isset($_POST["btnLogin"])) {
-    $userEmail = $_POST["useremail"];
-    $userPassword = $_POST["userpassword"];
+    $userEmail = $_POST["useremail"] ?? null;
+    $userPassword = $_POST["userpassword"] ?? null;
     $encryptedPassword = md5($userPassword);
 
-    // Check login credentials
+    // التحقق من بيانات تسجيل الدخول
     $query = "SELECT * FROM users WHERE email = :userEmail AND password = :userPassword";
     $statement = $connection->prepare($query);
     $statement->bindParam(':userEmail', $userEmail);
@@ -71,13 +96,12 @@ if (isset($_POST["btnLogin"])) {
     $result = $statement->fetch(PDO::FETCH_ASSOC);
 
     if ($result) {
-        session_start();
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["username"] = $result["username"];
-        header("location:../main-page/main.html");
+        header("location: ../main-page/main.html");
         exit();
     } else {
-        header("location:../login/login.php?message=" . urlencode("Invalid email or password, please try again"));
+        header("location: ../login/login.php?message=" . urlencode("Invalid email or password, please try again."));
         exit();
     }
 }

@@ -1,7 +1,15 @@
 <?php
 
-    // Handle file upload
-    $uploadMessage = ""; // رسالة حالة التحميل
+require_once "../databasePHP/connection.php";
+// require_once "../databasePHP/server.php" ;  // Handle file upload
+
+    $uploadMessage = "";
+
+    $uploadMessage = "";
+    $userName = $userEmail = $userPassword = $userPhone = $userRole = "";
+    $userImg = [];
+
+     // رسالة حالة التحميل
     if (isset($userImg) && $userImg["error"] == 0) {
         $allowedTypes = ["image/jpeg", "image/png", "image/gif"];
         $fileType = $userImg["type"];
@@ -44,4 +52,3 @@
     // إعادة التوجيه مع رسالة حالة التحميل
     header("location:../regester/register.php?message=" . urlencode($uploadMessage));
     exit();
-
