@@ -1,18 +1,18 @@
-
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+
+<body></body>
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Login </h2>
         <?php
         if (isset($_GET["message"])) {
             echo "<p class='alert alert-info'>" . htmlspecialchars($_GET["message"]) . "</p>";
@@ -21,15 +21,16 @@
         <form action="../databasePHP/server.php" method="POST">
             <div class="form-group">
                 <label for="useremail">Email:</label>
-                <input type="email" id="useremail" name="useremail" required />
+                <input type="email" id="useremail" name="useremail" required placeholder="Enter your email" />
             </div>
             <div class="form-group">
                 <label for="userpassword">Password:</label>
-                <input type="password" id="userpassword" name="userpassword" required />
+                <input type="password" id="userpassword" name="userpassword" required placeholder="Enter your password" />
             </div>
             <button type="submit" name="btnLogin" class="submit-btn">Login</button>
         </form>
-        <p>Don't have an account? <a href="../regester/register.php">Register here</a></p>
+        <p>Don't have an account? <a href="../regester/register.php">Register Now</a></p>
     </div>
 </body>
+
 </html>
