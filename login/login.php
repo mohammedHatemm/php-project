@@ -18,7 +18,7 @@
             echo "<p class='alert alert-info'>" . htmlspecialchars($_GET["message"]) . "</p>";
         }
         ?>
-        <form action="../databasePHP/server.php" method="POST">
+        <form action="../databasePHP/login.php" method="POST">
             <div class="form-group">
                 <label for="useremail">Email:</label>
                 <input type="email" id="useremail" name="useremail" required />

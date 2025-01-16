@@ -1,0 +1,116 @@
+body {
+    background-color:#adb5bd;
+}
+
+.navbar {
+    background-color: #87CEEB;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar a {
+    color: #ffffff;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.admin-icon {
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.admin-icon i {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.section {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgb(69, 161, 210);
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #87CEEB;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+thead th {
+    padding: 15px;
+    text-align: center;
+}
+
+tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+    background-color: #f0f8ff;
+}
+
+tbody td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+.status.processing {
+    color: #537aa1;
+}
+
+.status.completed {
+    color: #345a7c;
+}
+
+.status.deleted {
+    color: #7c8a96;
+}
+
+.action-icons i {
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.action-icons i:hover {
+    color: #345a7c;
+    transform: scale(1.2);
+}

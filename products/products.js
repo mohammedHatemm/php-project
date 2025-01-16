@@ -1,12 +1,16 @@
+
+
+
 let products = [];
 let currentFilter = "all";
+let cart = [];
 
 // تحميل المنتجات من ملف JSON
 async function loadProducts() {
   try {
     const response = await fetch("http://localhost/apis/get_products.php");
     const data = await response.json();
-    products = data.products;
+    products = data; // البيانات تُرجع مصفوفة مباشرةً
     displayProducts(products);
   } catch (error) {
     console.error("Error loading products:", error);
@@ -20,31 +24,21 @@ function displayProducts(productsToShow) {
 
   productsToShow.forEach((product) => {
     const productCard = `
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="product-card">
-                    <img src="${
-                      product.product_imag
-                    }" class="product-image w-100" alt="${
-      products.productName
-    }">
-                    <div class="product-body">
-                        <h5 class="product-title">${products.productName}</h5>
-                        <p class="product-description">${
-                          products.Product_description
-                        }</p>
-                        <div class="product-price">$${products.price.toFixed(
-                          2
-                        )}</div>
-                        <button class="btn btn-primary w-100" onclick="addToCart(${
-                          product.product_id
-                        })">
-                            Add to Cart
-                            <i class="fas fa-plus ms-2"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="product-card">
+          <img src="${product.product_img}" class="product-image w-100" alt="${product.productName}">
+          <div class="product-body">
+            <h5 class="product-title">${product.productName}</h5>
+            <p class="product-description">${product.product_description}</p>
+            <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>
+            <button class="btn btn-primary w-100" onclick="addToCart(${product.product_id})">
+              Add to Cart
+              <i class="fas fa-plus ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
     container.innerHTML += productCard;
   });
 }
@@ -55,7 +49,7 @@ function filterProducts(category) {
   const filteredProducts =
     category === "all"
       ? products
-      : products.filter((product) => products.category === category);
+      : products.filter((product) => product.category === category);
   displayProducts(filteredProducts);
 
   // تحديث حالة الأزرار النشطة
@@ -64,24 +58,11 @@ function filterProducts(category) {
   });
 }
 
-// إضافة event listeners لأزرار التصفية
-document.addEventListener("DOMContentLoaded", () => {
-  loadProducts();
-
-  document.querySelectorAll("[data-filter]").forEach((button) => {
-    button.addEventListener("click", (e) => {
-      filterProducts(e.target.dataset.filter);
-    });
-  });
-});
-
-// وظائف سلة التسوق
-let cart = [];
-
-function addToCart(product_Id) {
-  const product = products.find((p) => p.id === product_Id);
+// إضافة منتج إلى السلة
+function addToCart(productId) {
+  const product = products.find((p) => p.product_id === productId);
   if (product) {
-    const existingItem = cart.find((item) => item.id === product_Id);
+    const existingItem = cart.find((item) => item.product_id === productId);
     if (existingItem) {
       existingItem.quantity += 1;
     } else {
@@ -91,26 +72,29 @@ function addToCart(product_Id) {
   }
 }
 
-function removeFromCart(product_Id) {
-  const index = cart.findIndex((item) => item.id === product_Id);
+// إزالة منتج من السلة
+function removeFromCart(productId) {
+  const index = cart.findIndex((item) => item.product_id === productId);
   if (index > -1) {
     cart.splice(index, 1);
     updateCartDisplay();
   }
 }
 
-function updateQuantity(product_Id, change) {
-  const item = cart.find((item) => item.id === product_Id);
+// تحديث كمية المنتج في السلة
+function updateQuantity(productId, change) {
+  const item = cart.find((item) => item.product_id === productId);
   if (item) {
     item.quantity += change;
     if (item.quantity <= 0) {
-      removeFromCart(product_Id);
+      removeFromCart(productId);
     } else {
       updateCartDisplay();
     }
   }
 }
 
+// تحديث عرض السلة
 function updateCartDisplay() {
   const cartItems = document.getElementById("cart-items");
   const cartCount = document.getElementById("cart-count");
@@ -126,23 +110,23 @@ function updateCartDisplay() {
       (item) => `
         <div class="cart-item mb-3">
           <div class="d-flex justify-content-between align-items-center">
-            <span>${item.name}</span>
+            <span>${item.productName}</span>
             <span>$${(item.price * item.quantity).toFixed(2)}</span>
           </div>
           <div class="d-flex justify-content-between align-items-center mt-2">
             <div class="btn-group">
               <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity(${
-                item.id
+                item.product_id
               }, -1)">-</button>
               <span class="btn btn-sm btn-outline-secondary disabled">${
                 item.quantity
               }</span>
               <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity(${
-                item.id
+                item.product_id
               }, 1)">+</button>
             </div>
             <button class="btn btn-sm btn-danger" onclick="removeFromCart(${
-              item.id
+              item.product_id
             })">
               <i class="fas fa-trash"></i>
             </button>
@@ -156,25 +140,9 @@ function updateCartDisplay() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   cartTotal.textContent = total.toFixed(2);
 
+
   // تحديث عرض الـ overlay
   updateCartOverlay();
-}
-
-function checkout() {
-  if (cart.length === 0) {
-    alert("Your cart is empty!");
-    return;
-  }
-  alert("Thank you for your order!");
-  cart = [];
-  updateCartDisplay();
-}
-
-// تبديل حالة عرض السلة
-function toggleCart() {
-  const cartOverlay = document.getElementById("cartOverlay");
-  cartOverlay.classList.toggle("active");
-  updateCartOverlay(); // تحديث محتوى السلة
 }
 
 // تحديث محتوى السلة في الـ overlay
@@ -195,23 +163,23 @@ function updateCartOverlay() {
       (item) => `
         <div class="cart-item">
             <div class="d-flex justify-content-between align-items-center">
-                <span>${item.name}</span>
+                <span>${item.productName}</span>
                 <span>$${(item.price * item.quantity).toFixed(2)}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <div class="btn-group">
                     <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity(${
-                      item.id
+                      item.product_id
                     }, -1)">-</button>
                     <span class="btn btn-sm btn-outline-secondary disabled">${
                       item.quantity
                     }</span>
                     <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity(${
-                      item.id
+                      item.product_id
                     }, 1)">+</button>
                 </div>
                 <button class="btn btn-sm btn-danger" onclick="removeFromCart(${
-                  item.id
+                  item.product_id
                 })">
                     <i class="fas fa-trash"></i>
                 </button>
@@ -225,6 +193,24 @@ function updateCartOverlay() {
   cartTotalOverlay.textContent = cart
     .reduce((sum, item) => sum + item.price * item.quantity, 0)
     .toFixed(2);
+}
+
+// الدفع (Checkout)
+function checkout() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+  alert("Thank you for your order!");
+  cart = [];
+  updateCartDisplay();
+}
+
+// تبديل حالة عرض السلة
+function toggleCart() {
+  const cartOverlay = document.getElementById("cartOverlay");
+  cartOverlay.classList.toggle("active");
+  updateCartOverlay(); // تحديث محتوى السلة
 }
 
 // عرض رسالة نجاح الطلب
@@ -251,6 +237,14 @@ function hideCheckoutMessage() {
 
 // إضافة مستمع حدث لزر السلة في الـ navbar
 document.addEventListener("DOMContentLoaded", () => {
+  loadProducts();
+
+  document.querySelectorAll("[data-filter]").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      filterProducts(e.target.dataset.filter);
+    });
+  });
+
   const cartButton = document.querySelector(".nav-icons .fa-shopping-cart");
   cartButton.parentElement.addEventListener("click", (e) => {
     e.preventDefault();

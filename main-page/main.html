@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hotel Cafeteria</title>
-    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -72,6 +70,56 @@
       </div>
     </nav>
 
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="hero-content" data-aos="fade-up">
+              <h1 class="display-4 fw-bold mb-4">Welcome to Becoffee</h1>
+              <p class="lead mb-4">
+                Experience the finest coffee and delicious treats in a cozy
+                atmosphere
+              </p>
+              <div class="hero-features mb-5">
+                <div class="hero-feature">
+                  <i class="fas fa-star"></i>
+                  <span>Premium Quality</span>
+                </div>
+                <div class="hero-feature">
+                  <i class="fas fa-coffee"></i>
+                  <span>Fresh Coffee</span>
+                </div>
+                <div class="hero-feature">
+                  <i class="fas fa-cookie"></i>
+                  <span>Tasty Desserts</span>
+                </div>
+              </div>
+              <div class="hero-buttons">
+                <a href="#menu" class="btn btn-primary btn-lg">
+                  View Menu
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#about" class="btn btn-outline-light btn-lg">
+                  About Us
+                  <i class="fas fa-info-circle"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="floating-card card-1">
+        <i class="fas fa-coffee"></i>
+        <span>200+ Coffee Varieties</span>
+      </div>
+      <div class="floating-card card-2">
+        <i class="fas fa-users"></i>
+        <span>1000+ Happy Customers</span>
+      </div>
+    </section>
+
     <!-- Header -->
     <header class="main-header">
       <div class="container">
@@ -99,11 +147,11 @@
             <a href="../products/products.html" class="btn btn-primary btn-lg">Explore Menu</a>
           </div>
           <div class="col-lg-6">
-            <!-- <img
+            <img
               src="./home_coffee_slide1.png"
               alt="Cafeteria"
               class="img-fluid header-image"
-            /> -->
+            />
           </div>
         </div>
       </div>
@@ -181,11 +229,11 @@
         <div class="row align-items-center">
           <div class="col-lg-6 mb-4 mb-lg-0">
             <div class="menu-image-container">
-              <!-- <img
+              <img
                 src="./66782a3f20ce4051506907.jpg"
                 alt="Menu Image"
                 class="img-fluid rounded-lg menu-image"
-              /> -->
+              />
               <div class="menu-image-overlay"></div>
             </div>
           </div>
@@ -225,7 +273,10 @@
                   </div>
                 </div>
               </div>
-              <a href="../products/products.html" class="btn btn-primary btn-lg mt-4">
+              <a
+                href="../products/products.html"
+                class="btn btn-primary btn-lg mt-4"
+              >
                 <span>Explore Full Menu</span>
                 <i class="fas fa-arrow-right ms-2"></i>
               </a>
@@ -278,11 +329,11 @@
           </div>
           <div class="col-lg-6">
             <div class="about-image-container">
-              <!-- <img
+              <img
                 src="about-image.jpg"
                 alt="About Us"
                 class="img-fluid rounded-lg about-image"
-              /> -->
+              />
               <div class="about-image-overlay"></div>
             </div>
           </div>
@@ -373,6 +424,6 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-    <script src="script.js"></script>
+    <script src="products.js"></script>
   </body>
 </html>

@@ -1,3 +1,4 @@
+
 :root {
   --primary-color: #87CEEB;
   --secondary-color: #808080;
@@ -467,6 +468,8 @@ footer::before {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
 .main-header::before {
@@ -483,6 +486,7 @@ footer::before {
 .main-header .container {
   position: relative;
   z-index: 1;
+  text-align: center;
 }
 
 .main-header h1 {
@@ -491,6 +495,7 @@ footer::before {
   background: linear-gradient(45deg, #fff, var(--primary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .main-header .lead {
@@ -1381,4 +1386,249 @@ footer::before {
   .cart-sidebar-overlay {
       width: 100%;
   }
+}
+
+/* Hero Section Styling */
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    background: url('../product-img/66782a3f20ce4051506907.jpg') center/cover fixed;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.6)
+    );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, #fff, var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-features {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.hero-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 1.2rem;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    flex: 1 1 auto;
+    min-width: 200px;
+}
+
+.hero-feature:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-buttons .btn {
+    flex: 1 1 auto;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+}
+
+.floating-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem 1.5rem;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: float 3s ease-in-out infinite;
+    backdrop-filter: blur(10px);
+    z-index: 3;
+}
+
+.card-1 {
+    top: 20%;
+    right: 10%;
+}
+
+.card-2 {
+    bottom: 20%;
+    left: 10%;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.btn-outline-light {
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
+/* تحسين التجاوب مع الشاشات الصغيرة */
+@media (max-width: 991.98px) {
+    .hero-content {
+        text-align: center;
+        margin: 2rem;
+    }
+
+    .hero-features {
+        justify-content: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .floating-card {
+        position: static;
+        margin: 1rem auto;
+        width: fit-content;
+    }
+
+    .card-1, .card-2 {
+        animation: none;
+        transform: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-feature {
+        width: 100%;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+}
+
+/* تحسين قسم الميزات لجعله أكثر جاذبية */
+.features-section {
+  background: linear-gradient(45deg, rgba(135, 206, 235, 0.1), rgba(64, 64, 64, 0.85));
+  padding: 5rem 0;
+}
+
+.feature-box {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.feature-box:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  background: linear-gradient(45deg, var(--primary-color), #5f9ea0);
+  padding: 1rem;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.feature-icon:hover {
+  transform: scale(1.1);
+}
+
+/* تحسين قسم "عنّا" */
+.about-section {
+  background: linear-gradient(45deg, var(--medium-gray), var(--dark-gray));
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.about-image {
+  transition: transform 0.5s ease;
+}
+
+.about-image-container:hover .about-image {
+  transform: scale(1.05);
+}
+
+/* تحسين قسم القائمة */
+.menu-section {
+  background: linear-gradient(45deg, var(--medium-gray), var(--dark-gray));
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.menu-image {
+  transition: transform 0.5s ease;
+}
+
+.menu-image-container:hover .menu-image {
+  transform: scale(1.05);
 }

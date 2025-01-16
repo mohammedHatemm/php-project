@@ -1,10 +1,11 @@
 <?php
 session_start();
-require_once "../databasePHP/connection.php"; // تأكد من أن هذا الملف يحتوي على اتصال قاعدة البيانات
+require_once "../databasePHP/connection.php";
+ // تأكد من أن هذا الملف يحتوي على اتصال قاعدة البيانات
 
 // Register (Signup)
 if (isset($_POST["registerBtn"])) {
-    $userId = $_POST["userId"];
+    // $userId = $_POST["userId"];
     $userName = $_POST["username"] ?? null;
     $userPassword = $_POST["userpassword"] ?? null;
     $confirmPassword = $_POST["confirmpassword"] ?? null;
@@ -18,6 +19,15 @@ if (isset($_POST["registerBtn"])) {
         header("location: ../regester/register.php?message=" . urlencode("Passwords do not match."));
         exit();
     }
+// التحقق من رفم الهاتف
+    if (strlen($userPhone) !== 11 || !ctype_digit($userPhone)) {
+      header("location: ../regester/register.php?message=" . urlencode("Phone number must be exactly 11 digits."));
+      exit();
+  }
+
+
+
+
 
     // التحقق من صحة البريد الإلكتروني
     if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
@@ -27,7 +37,7 @@ if (isset($_POST["registerBtn"])) {
 
     // التحقق من صحة الصورة
     if (isset($userImg) && $userImg["error"] == 0) {
-        $allowedTypes = ["image/jpeg", "image/png", "image/gif , image/jpg"];
+      $allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
         $fileType = $userImg["type"];
 
         if (in_array($fileType, $allowedTypes)) {
@@ -55,11 +65,14 @@ if (isset($_POST["registerBtn"])) {
                     exit();
                 } else {
                     // إدخال المستخدم الجديد في قاعدة البيانات
-                    $query = "INSERT INTO users ( user_id   , username, password, email, phone, role, user_img) VALUES (:userId,:userName, :userPassword, :userEmail, :userPhone, :userRole, :userImg  )";
+                    $query = "INSERT INTO users (    username, password, email, phone, role, user_img) VALUES (:userName, :userPassword, :userEmail, :userPhone, :userRole, :userImg  )";
                     $statement = $connection->prepare($query);
 
                     $statement->bindParam(':userName', $userName);
                     $statement->bindParam(':userPassword', $hashedPassword);
+                    //  $statement -> bindParam(':confirmPassword' ,$confirmpassword);
+
+
                     $statement->bindParam(':userEmail', $userEmail);
                     $statement->bindParam(':userPhone', $userPhone);
                     $statement->bindParam(':userRole', $userRole);

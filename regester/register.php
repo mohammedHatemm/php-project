@@ -15,7 +15,7 @@
             echo "<p class='alert alert-info'>" . htmlspecialchars($_GET["message"]) . "</p>";
         }
         ?>
-        <form action="../databasePHP/server.php" method="POST" enctype="multipart/form-data">
+        <form action="../databasePHP/register.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required />

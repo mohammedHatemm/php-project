@@ -2,77 +2,49 @@
 
 
 
-header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-// header("Access-Control-Allow-Methods:GET");
-// header("Access-Control-Allow-Headers:Content-Type,Access-Control-Allow-Headers,Authorization,X-Request-with");
 
- include '../databasePHP/connection.php';
-
+// الاتصال بقاعدة البيانات
+$dbtype = "mysql";
+$dbhost = "localhost";
+$dbname = "cafateria";
+$dbuser = "root";
+$dbpass = "123456";
 
 try {
-
-    $stmt = $connection->prepare("SELECT * FROM products");
-    $stmt->execute();
-
-
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    echo json_encode($products);
+    $connection = new PDO("$dbtype:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo json_encode(["error" => $e->getMessage()]);
+    die("Connection failed: " . $e->getMessage());
 }
+
+// جلب البيانات من الجدول
+$query = "SELECT * FROM products";
+$statement = $connection->prepare($query);
+$statement->execute();
+$products = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+// إرجاع البيانات بتنسيق JSON
+echo json_encode($products);
+
+
+
 
 
 // header("Content-Type: application/json");
 
-// $method = $_SERVER['REQUEST_METHOD'];
-// $input = json_decode(file_get_contents('php://input'), true);
+// try {
+//     $connection = new PDO("mysql:host=localhost;dbname=cafateria", "root", "123456");
+//     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// switch ($method) {
-//     case 'GET':
-//         handleGet($connection);
-//         break;
-//     case 'POST':
-//         handlePost($connection, $input);
-//         break;
-//     case 'PUT':
-//         handlePut($connection, $input);
-//         break;
-//     case 'DELETE':
-//         handleDelete($connection, $input);
-//         break;
-//     default:
-//         echo json_encode(['message' => 'Invalid request method']);
-//         break;
-// }
+//     // جلب البيانات من الجدول مع تحويل مسار الصورة لـ URL كامل
+//     $query = "SELECT product_id, productName, category, price ,product_description, CONCAT('http://localhost/uploads/', product_img) AS product_img FROM products";
+//     $statement = $connection->prepare($query);
+//     $statement->execute();
+//     $products = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-// function handleGet($connection) {
-//     $sql = "SELECT * FROM products";
-//     $stmt = $connection->prepare($sql);
-//     $stmt->execute();
-//     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//     echo json_encode($result);
-// }
-
-// function handlePost($connection, $input) {
-//     $sql = "INSERT INTO products (name, email) VALUES (:name, :email)";
-//     $stmt = $connection->prepare($sql);
-//     $stmt->execute(['name' => $input['name'], 'email' => $input['email']]);
-//     echo json_encode(['message' => 'User created successfully']);
-// }
-
-// function handlePut($connection, $input) {
-//     $sql = "UPDATE products SET name = :name, email = :email WHERE id = :id";
-//     $stmt = $connection->prepare($sql);
-//     $stmt->execute(['name' => $input['name'], 'email' => $input['email'], 'id' => $input['id']]);
-//     echo json_encode(['message' => 'User updated successfully']);
-// }
-
-// function handleDelete($connection, $input) {
-//     $sql = "DELETE FROM products WHERE id = :id";
-//     $stmt = $connection->prepare($sql);
-//     $stmt->execute(['id' => $input['id']]);
-//     echo json_encode(['message' => 'User deleted successfully']);
+//     echo json_encode($products);
+// } catch (PDOException $e) {
+//     echo json_encode(["error" => "Failed to fetch data: " . $e->getMessage()]);
 // }
 // ?>
