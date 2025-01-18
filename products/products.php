@@ -1,3 +1,25 @@
+<?php
+require_once '../databasePHP/connection.php';
+
+// جلب البيانات من جدول المنتجات
+$sql = "SELECT * FROM products";
+$stmt = $connection->query($sql);
+
+$products = array(); // مصفوفة لتخزين المنتجات
+
+// التحقق من وجود بيانات
+if ($stmt) {
+    $products = $stmt->fetchAll(); // جلب جميع الصفوف كـ array
+    if (empty($products)) {
+        // إذا لم توجد بيانات
+        echo "<p class='text-center text-danger'>لا توجد منتجات في قاعدة البيانات.</p>";
+    }
+} else {
+    // إذا كان هناك خطأ في الاستعلام
+    echo "<p class='text-center text-danger'>خطأ في جلب البيانات.</p>";
+}
+
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
@@ -46,7 +68,7 @@
               <a class="nav-link" href="../main-page/main.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../products/products.html">Menu</a>
+              <a class="nav-link" href="#">Menu</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#about">About</a>
@@ -61,7 +83,7 @@
             <a href="#" class="nav-link d-inline-block me-3">
               <i class="fas fa-shopping-cart"></i>
             </a>
-            <a href="#" class="nav-link d-inline-block">
+            <a href="../menna/allUsers.php" class="nav-link d-inline-block">
               <i class="fas fa-user"></i>
             </a>
           </div>
@@ -104,14 +126,45 @@
               </button>
             </div>
 
-            <!-- Products Container -->
-            <div class="row g-4" id="products-container">
-              <!-- Products will be added here dynamically -->
-            </div>
+
+
+    <div class="row g-4" id="products-container">
+      <?php if (!empty($products)): ?>
+          <?php foreach ($products as $product): ?>
+              <div class="col-md-4 mb-4">
+                  <div class="card product-card">
+                      <!-- عرض الصورة -->
+                      <img src="../product-img/<?php echo $product['product_img']; ?>" class="card-img-top"style="min-height: 200px;max-height: 200px;" alt="<?php echo $product['productName']; ?>">
+                      <div class="card-body">
+                          <h5 class="card-title"><?php echo $product['productName']; ?></h5>
+                          <p class="card-text"><?php echo $product['product_description']; ?></p>
+                          <p class="card-text"><strong>Price: <?php echo $product['price']; ?> $</strong></p>
+                          <button class="btn btn-primary"
+style="width: 100%;"
+
+                           onclick="addToCart(<?php echo $product['product_id']; ?>, '<?php echo $product['productName']; ?>', <?php echo $product['price']; ?>)">
+                              Add to Cart
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          <?php endforeach; ?>
+      <?php else: ?>
+          <div class="col-12">
+              <p class="text-center text-warning">No products available.</p>
           </div>
-        </div>
-      </div>
-    </section>
+      <?php endif; ?>
+  </div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+
+
+
 
     <!-- Footer -->
     <footer class="bg-dark text-light py-5">

@@ -165,6 +165,7 @@ body {
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
+  width: 100%;
 }
 
 .btn-primary:hover {

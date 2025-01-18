@@ -1,11 +1,5 @@
 
-<?php
-require_once '../databasePHP/connection.php';
 
-require_once '../databasePHP/userdata.php';
-
-
-?>
 
 
 <!--
@@ -163,6 +157,16 @@ require_once '../databasePHP/userdata.php';
 
 
 
+
+
+<?php
+require_once '../databasePHP/connection.php';
+require_once '../databasePHP/userdata.php';
+
+// جلب البيانات من قاعدة البيانات
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -203,7 +207,6 @@ require_once '../databasePHP/userdata.php';
                 <th>Name</th>
                 <th>Items</th>
                 <th>Room</th>
-                <th>Ext</th>
                 <th>Total</th>
                 <th>Action</th>
             </tr>
@@ -217,10 +220,9 @@ require_once '../databasePHP/userdata.php';
                         <button class="action-button" onclick="toggleProducts('product-list-<?php echo $order['order_id']; ?>')">View Products</button>
                     </td>
                     <td><?php echo $order['room_number']; ?></td>
-                    <td><?php echo $order['room_ext']; ?></td>
                     <td class="total"><?php echo $order['total_price']; ?> LE</td>
                     <td>
-                        <?php if ($order['status'] == 'Pending'): ?>
+                        <?php if ($order['status'] == 'pending'): ?>
                             <button class="action-button" onclick="deliverOrder(<?php echo $order['order_id']; ?>)">Deliver</button>
                         <?php else: ?>
                             <span class="text-success">Delivered</span>
