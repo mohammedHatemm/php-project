@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label for="userphone">Phone:</label>
-                <input type="text" id="userphone" name="userphone" required />
+                <input type="text" id="userphone" name="userphone"  />
             </div>
             <div class="form-group">
                 <label for="role">Role:</label>
@@ -44,7 +44,7 @@
                 </select>
             </div>
             <div class="form-group" id="roomNumField">
-            <input type="number" name="room_num" placeholder="room number" required>
+            <input type="number" name="room_num" placeholder="room number" >
         </div>
             <div class="form-group">
                 <label for="profile_image">Profile Image:</label>

@@ -2,6 +2,10 @@
 
 
 
+
+
+
+session_start();
 require_once "../databasePHP/connection.php";
 
 
@@ -19,12 +23,20 @@ if (isset($_POST["btnLogin"])) {
     $result = $statement->fetch(PDO::FETCH_ASSOC);
 
     if ($result && password_verify($userPassword, $result["password"])) {
+        // تخزين بيانات المستخدم في الجلسة
         $_SESSION["user_id"] = $result["user_id"];
         $_SESSION["username"] = $result["username"];
-        header("location:../main-page/main.html");
+        $_SESSION["user_role"] = $result["role"]; // تخزين دور المستخدم
+
+        // إعادة التوجيه بناءً على الدور
+        if ($result["role"] === "admin") {
+            header("location:../menna/allUsers.php");
+        } else {
+            header("location: ../main-page/main.php"); // لوحة تحكم المستخدمين
+        }
         exit();
     } else {
-        header("location:../login/login.php?message=" . urlencode("Invalid email or password, please try again."));
+        header("location: ../login/login.php?message=" . urlencode("Invalid email or password, please try again."));
         exit();
     }
 }

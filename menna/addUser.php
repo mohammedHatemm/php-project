@@ -1,6 +1,6 @@
 
 <?php
-
+session_start();
 require_once "../databasePHP/connection.php";
 require_once "../databasePHP/adduser.php";
 
@@ -37,6 +37,9 @@ include('header.php');
                 <input type="text" id="userphone" name="userphone" required />
                 <label for="profile_image">Profile Image:</label>
                 <input type="file" id="profile_image" name="userimg" accept="image/*" required />
+                <div class="form-group" id="roomNumField">
+            <input type="number" name="room_num" placeholder="room number" >
+        </div>
             <label for="role">Role:</label>
             <select name="role" required>
                 <option value="admin">Admin</option>

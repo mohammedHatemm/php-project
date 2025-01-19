@@ -1,121 +1,57 @@
 <?php
-ob_start();
+require_once '../databasePHP/connection.php';
+
 session_start();
-require_once "../databasePHP/connection.php"; // تأكد من أن هذا الملف يحتوي على اتصال قاعدة البيانات
 
-if (isset($_POST["registerBtn"])) {
-    $userName = $_POST["username"] ?? null;
-    $userPassword = $_POST["userpassword"] ?? null;
-    $confirmPassword = $_POST["confirmpassword"] ?? null;
-    $userEmail = $_POST["useremail"] ?? null;
-    $userPhone = $_POST["userphone"] ?? null;
-    $userRole = $_POST["role"] ?? null;
-    $userImg = $_FILES["userimg"] ?? null;
-    $roomNum = ($userRole === 'user') ? ($_POST["room_num"] ?? null) : null; // رقم الغرفة فقط للمستخدمين
+// التحقق من أن الطلب هو POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // قراءة البيانات المرسلة
+    $json = file_get_contents('php://input');
+    $cart = json_decode($json, true);
 
-    // التحقق من تطابق كلمة المرور
-    if ($userPassword !== $confirmPassword) {
-        header("location: ../regester/register.php?message=" . urlencode("كلمة المرور غير متطابقة."));
-        exit();
-    }
+    if (is_array($cart)) {
+        try {
+            // بدء معاملة (transaction) لضمان سلامة البيانات
+            $connection->beginTransaction();
 
-    // التحقق من رقم الهاتف
-    if (strlen($userPhone) !== 11 || !ctype_digit($userPhone)) {
-        header("location: ../regester/register.php?message=" . urlencode("رقم الهاتف يجب أن يكون 11 رقمًا."));
-        exit();
-    }
+            // حساب المجموع الكلي للطلب
+            $totalPrice = array_reduce($cart, function($sum, $item) {
+                return $sum + ($item['price'] * $item['quantity']);
+            }, 0);
 
-    // التحقق من صحة البريد الإلكتروني
-    if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-        header("location: ../regester/register.php?message=" . urlencode("صيغة البريد الإلكتروني غير صحيحة."));
-        exit();
-    }
+            // إدراج الطلب في جدول الطلبات
+            $stmt = $connection->prepare("INSERT INTO orders (user_id, total_price, order_date) VALUES (:user_id, :total_price, NOW())");
+            $stmt->execute([
+                ':user_id' => $_SESSION['user_id'], // يمكنك تعديل هذا ليتناسب مع نظام المستخدمين الخاص بك
+                ':total_price' => $totalPrice
+            ]);
 
-    // التحقق من صحة الصورة
-    if (isset($userImg) && $userImg["error"] == 0) {
-        $allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
-        $fileType = $userImg["type"];
+            $orderId = $connection->lastInsertId(); // الحصول على معرف الطلب الجديد
 
-        if (in_array($fileType, $allowedTypes)) {
-            $uploadDir = "../uploads/";
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
+            // إدراج تفاصيل الطلب في جدول تفاصيل الطلبات
+            $stmt = $connection->prepare("INSERT INTO order_details (order_id, product_id, quantity, price) VALUES (:order_id, :product_id, :quantity, :price)");
+            foreach ($cart as $item) {
+                $stmt->execute([
+                    ':order_id' => $orderId,
+                    ':product_id' => $item['id'],
+                    ':quantity' => $item['quantity'],
+                    ':price' => $item['price']
+                ]);
             }
 
-            $fileName = uniqid() . "_" . basename($userImg["name"]);
-            $uploadFilePath = $uploadDir . $fileName;
+            // إتمام المعاملة
+            $connection->commit();
 
-            if (move_uploaded_file($userImg["tmp_name"], $uploadFilePath)) {
-                // Hash password
-                $hashedPassword = password_hash($userPassword, PASSWORD_DEFAULT);
-
-                // التحقق من وجود المستخدم مسبقًا
-                $checkQuery = "SELECT * FROM users WHERE email = :userEmail OR username = :userName OR phone = :userPhone";
-                $checkStatement = $connection->prepare($checkQuery);
-                $checkStatement->bindParam(':userEmail', $userEmail);
-                $checkStatement->bindParam(':userName', $userName);
-                $checkStatement->bindParam(':userPhone', $userPhone);
-                $checkStatement->execute();
-
-                if ($checkStatement->rowCount() > 0) {
-                    header("location: ../regester/register.php?message=" . urlencode("المستخدم موجود مسبقًا."));
-                    exit();
-                } else {
-                    // التحقق من توفر الغرفة
-                    if ($userRole === 'user') {
-                        if (empty($roomNum)) {
-                            header("location: ../regester/register.php?message=" . urlencode("رقم الغرفة مطلوب للمستخدمين."));
-                            exit();
-                        }
-
-                        // التحقق من توفر الغرفة
-                        $roomQuery = "SELECT is_available FROM rooms WHERE room_num = :roomNum";
-                        $roomStatement = $connection->prepare($roomQuery);
-                        $roomStatement->bindParam(':roomNum', $roomNum);
-                        $roomStatement->execute();
-                        $room = $roomStatement->fetch(PDO::FETCH_ASSOC);
-
-                        if (!$room || !$room['is_available']) {
-                            header("location: ../regester/register.php?message=" . urlencode("الغرفة غير متاحة."));
-                            exit();
-                        }
-                    }
-
-                    // إدخال المستخدم الجديد في قاعدة البيانات
-                    $query = "INSERT INTO users (username, password, email, phone, role, user_img, room_num) VALUES (:userName, :userPassword, :userEmail, :userPhone, :userRole, :userImg, :roomNum)";
-                    $statement = $connection->prepare($query);
-
-                    $statement->bindParam(':userName', $userName);
-                    $statement->bindParam(':userPassword', $hashedPassword);
-                    $statement->bindParam(':userEmail', $userEmail);
-                    $statement->bindParam(':userPhone', $userPhone);
-                    $statement->bindParam(':userRole', $userRole);
-                    $statement->bindParam(':userImg', $uploadFilePath);
-                    $statement->bindParam(':roomNum', $roomNum);
-                    $statement->execute();
-
-                    // تحديث حالة الغرفة إلى "محجوزة"
-                    if ($userRole === 'user') {
-                        $updateRoomQuery = "UPDATE rooms SET is_available = FALSE WHERE room_num = :roomNum";
-                        $updateRoomStatement = $connection->prepare($updateRoomQuery);
-                        $updateRoomStatement->bindParam(':roomNum', $roomNum);
-                        $updateRoomStatement->execute();
-                    }
-
-                    header("location: ../regester/register.php?message=" . urlencode("تم التسجيل بنجاح!"));
-                    exit();
-                }
-            } else {
-                header("location: ../regester/register.php?message=" . urlencode("فشل تحميل الصورة."));
-                exit();
-            }
-        } else {
-            header("location: ../regester/register.php?message=" . urlencode("نوع الملف غير مدعوم. يُسمح فقط بملفات JPEG, PNG, و GIF."));
-            exit();
+            // إرسال استجابة نجاح
+            echo json_encode(['success' => true, 'message' => 'تمت عملية الطلب بنجاح.']);
+        } catch (PDOException $e) {
+            // التراجع عن المعاملة في حالة حدوث خطأ
+            $connection->rollBack();
+            echo json_encode(['success' => false, 'message' => 'خطأ في قاعدة البيانات: ' . $e->getMessage()]);
         }
     } else {
-        header("location: ../regester/register.php?message=" . urlencode("يرجى تحميل صورة شخصية."));
-        exit();
+        echo json_encode(['success' => false, 'message' => 'بيانات غير صالحة.']);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'طريقة الطلب غير صالحة.']);
 }
-?>

@@ -1,4 +1,7 @@
-<?php
+ <?php
+
+
+
 session_start();
 require_once "connection.php";
 
@@ -10,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['userphone'] ?? null;
     $role = $_POST['role'] ?? 'user';
     $userimg = $_FILES['userimg'] ?? null;
+    $roomNum = $_POST["roomnum"] ?? null;
+
 
     // التحقق من صحة البريد الإلكتروني
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -40,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("location:../addUser.php?message=" . urlencode("Invalid file type. Only JPEG, PNG, and GIF are allowed."));
             exit();
         }
+    }else {
+        $userImagePath = $defaultImage; // استخدام الصورة الافتراضية
     }
 
     // تشفير كلمة المرور
@@ -56,20 +63,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("location:../addUser.php?message=" . urlencode("User with this email or username already exists."));
         exit();
     }
+    if ($userRole === 'user' && empty($roomNum)) {
+        header("location:test2.php?message=" . urlencode("The room number is empty"));
+        exit();
+    }
 
     // إدخال المستخدم الجديد في قاعدة البيانات
-    $query = "INSERT INTO users (username, password, email, phone, role, user_img) VALUES (:username, :password, :email, :phone, :role, :user_img)";
+    $query = "INSERT INTO users (username, password, email, phone, role, user_img, room_num) VALUES (:userName, :userPassword, :userEmail, :userPhone, :userRole, :userImg, :roomNum)";
     $statement = $connection->prepare($query);
 
-    $statement->bindParam(':username', $username);
-    $statement->bindParam(':password', $hashedPassword);
-    $statement->bindParam(':email', $email);
-    $statement->bindParam(':phone', $phone);
-    $statement->bindParam(':role', $role);
-    $statement->bindParam(':user_img', $uploadFilePath);
+    $statement->bindParam(':userName', $userName);
+    $statement->bindParam(':userPassword', $hashedPassword);
+    $statement->bindParam(':userEmail', $userEmail);
+    $statement->bindParam(':userPhone', $userPhone);
+    $statement->bindParam(':userRole', $userRole);
+    $statement->bindParam(':userImg', $userImagePath); // استخدام المسار الصحيح للصورة
+    $statement->bindParam(':roomNum', $roomNum); // إذا كان المستخدم "admin" سيكون room_num = null
+
     $statement->execute();
 
     header("location:../menna/allUsers.php?message=" . urlencode("User added successfully!"));
     exit();
 }
-?>
+?> 

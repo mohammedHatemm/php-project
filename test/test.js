@@ -1,5 +1,3 @@
-
-
 // تهيئة السلة
 let cart = [];
 
@@ -35,7 +33,7 @@ function updateCartUI() {
             .map(
                 (item) => `
                     <div class="cart-item">
-                        <P><img src="../product-img/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;"></p>
+                        <P><img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;"></p>
                         <h6>${item.name}</h6>
                         <p>$${item.price.toFixed(2)} x ${item.quantity}</p>
                         <div class="cart-item-actions">
@@ -124,6 +122,43 @@ function showToast(message) {
     setTimeout(() => {
         toast.remove();
     }, 3000); // إزالة الرسالة بعد 3 ثوانٍ
+}
+
+// دالة لإرسال بيانات الطلب إلى السيرفر
+async function checkout() {
+    if (cart.length === 0) {
+        showToast("السلة فارغة!");
+        return;
+    }
+
+    try {
+        const response = await fetch('../databasePHP/addcart.phpaddcart.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                items: cart.map(item => ({
+                    id: item.id,
+                    quantity: item.quantity,
+                    price: item.price
+                }))
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            showCheckoutMessage(); // عرض رسالة نجاح الطلب
+            cart = []; // إفراغ السلة
+            updateCartUI(); // تحديث واجهة السلة
+        } else {
+            showToast(result.message || "حدث خطأ أثناء إتمام الطلب");
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showToast("حدث خطأ في النظام");
+    }
 }
 
 // تحميل السلة عند فتح الصفحة

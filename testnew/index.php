@@ -1,5 +1,13 @@
 <?php
+session_start();
 require_once '../databasePHP/connection.php';
+require_once "../databasePHP/addcart.php";
+
+
+// تهيئة السلة إذا لم تكن موجودة
+if (!isset($_SESSION["cart"])) {
+    $_SESSION["cart"] = [];
+}
 
 // جلب البيانات من جدول المنتجات
 $sql = "SELECT * FROM products";
@@ -56,7 +64,7 @@ if ($stmt) {
                         <i class="fas fa-shopping-cart"></i>
                         <span id="cart-count-overlay" class="badge bg-primary">0</span>
                     </a>
-                    <a href="../menna/allUsers.php" class="nav-link d-inline-block">
+                    <a href="#" onclick="redirectUser()" class="nav-link d-inline-block">
                         <i class="fas fa-user"></i>
                     </a>
                 </div>
@@ -189,8 +197,31 @@ if ($stmt) {
             <button class="btn btn-primary" onclick="hideCheckoutMessage()">Continue Shopping</button>
         </div>
     </div>
+    <script>
+    function redirectUser() {
+        console.log("hamada")
+        <?php
+        if (isset($_SESSION['role'])) {
+            if ($_SESSION['role'] === 'admin') {
+                // إذا كان المستخدم مشرفًا
+                echo "window.location.href = '../menna/allUsers.php';";
+            } else {
+                // إذا كان المستخدم عاديًا
+                echo "alert('غير مسموح لك بالوصول إلى هذه الصفحة.');";
+            }
+        } else {
+            // إذا لم يكن المستخدم مسجل الدخول
+            echo "window.location.href = '../main-page/main.php';";
+        }
+        ?>
+    }
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
     <script src="crd.js"></script>
+    <script src="../test/test.js"></script>
 </body>
 </html>

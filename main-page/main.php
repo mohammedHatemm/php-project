@@ -1,4 +1,18 @@
+
+<?php
+
+session_start();
+
+// تهيئة السلة إذا لم تكن موجودة
+if (!isset($_SESSION["cart"])) {
+    $_SESSION["cart"] = [];
+
+}
+?>
+
+
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
@@ -44,7 +58,7 @@
           <!-- Center menu items -->
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#home">Home</a>
+              <a class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../testnew/index.php">Menu</a>
@@ -59,11 +73,11 @@
 
           <!-- Right icons -->
           <div class="nav-icons">
-            <a href="#" class="nav-link d-inline-block me-3">
+            <a href="#" class="nav-link d-inline-block me-3" >
               <i class="fas fa-shopping-cart"></i>
             </a>
-            <a href="#" class="nav-link d-inline-block">
-              <i class="fas fa-user"></i>
+            <a href="#" class="nav-link d-inline-block" onclick="userprofile()">
+              <i class="fas fa-user" ></i>
             </a>
           </div>
         </div>
@@ -420,9 +434,30 @@
         </div>
       </div>
     </footer>
+     <script>
+    function userprofile(){
+      console.log("hamada")
+        <?php
+        if (isset($_SESSION['role'])) {
+            if ($_SESSION['role'] === 'admin') {
+                // إذا كان المستخدم مشرفًا
+                header("location :../menna/allUsers.php");
+
+              } else {
+                // إذا كان المستخدم عاديًا
+                echo "alert('غير مسموح لك بالوصول إلى هذه الصفحة.');";
+            }
+         } else {
+        //     // إذا لم يكن المستخدم مسجل الدخول
+            echo "window.location.href = '../main-page/main.php';";
+        }
+        ?>
+    }
+    </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Custom JS -->
     <script src="main.js"></script>
   </body>

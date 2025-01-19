@@ -4,6 +4,7 @@
 $dbtype = "mysql";
 $dbhost = "localhost";
 $dbname = "cafateria";
+// $dbname = "cafeteriaphp";
 $dbuser = "root";
 $dbpass = "123456";
 
