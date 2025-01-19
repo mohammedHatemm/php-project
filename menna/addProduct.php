@@ -20,7 +20,7 @@ require_once "../databasePHP/connection.php";
 <body>
 <?php
  include('navbar.html') ;
-include('header.php');
+ include('header.php');
 
 ?>
     <div class="container">
@@ -41,6 +41,6 @@ include('header.php');
         </form>
         <a href="addCategory.php" class="btn">Add Category</a>
     </div>
-    <?php include('footer.php'); ?>
+     <!-- include('footer.php');  -->
 </body>
 </html>
