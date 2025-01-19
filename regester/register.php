@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="register.css" />
 </head>
 <body>
     <div class="login-container">
@@ -43,13 +43,17 @@
                     <option value="user">User</option>
                 </select>
             </div>
+            <div class="form-group" id="roomNumField">
+            <input type="number" name="room_num" placeholder="room number" required>
+        </div>
             <div class="form-group">
                 <label for="profile_image">Profile Image:</label>
-                <input type="file" id="profile_image" name="userimg" accept="image/*" required />
+                <input type="file" id="profile_image" name="userimg" accept="image/*" />
             </div>
             <button type="submit" name="registerBtn" class="submit-btn">Register</button>
         </form>
         <p>Already have an account? <a href="../login/login.php">Login here</a></p>
     </div>
+    <script src="register.js"></script>
 </body>
 </html>

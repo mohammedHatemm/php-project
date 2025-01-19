@@ -1,132 +1,114 @@
-        /* إضافة تنسيقات مخصصة */
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f8f9fa;
-        }
-        .product-card {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .product-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-        .product-action {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-        .product-action a {
-            color: #333;
-            font-size: 18px;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            width: 400px;
-            max-width: 90%;
-        }
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            float: right;
-        }
-        /* تنسيقات الكارد الجانبي */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100%;
-            background-color: #fff;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-            transition: right 0.3s ease;
-            padding: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-        .close-sidebar {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            float: left;
-        }
-        .selected-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .selected-item h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-        .selected-item p {
-            margin: 5px 0;
-            color: #666;
-        }
-        .item-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .item-actions input {
-            width: 60px;
-            padding: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .item-actions button {
-            background: none;
-            border: none;
-            color: #ff4d4d;
-            cursor: pointer;
-        }
-        .sidebar-actions {
-            margin-top: auto; /* لنقل الأزرار إلى أسفل الكارد */
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-        }
-        .sidebar-actions .btn {
-            font-size: 16px;
-            padding: 10px;
-        }
-        /* تنسيقات الرسالة */
-        .alert {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            z-index: 1001;
-            animation: slideIn 0.5s ease-out;
-        }
+/* أنماط عامة */
+body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+  }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(0);
-            }
-        }
+  .navbar {
+    transition: background-color 0.3s ease;
+  }
+
+  .navbar.scrolled {
+    background-color: #333 !important;
+  }
+
+  .hero-section {
+    background: url('hero-bg.jpg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+  }
+
+  .hero-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .menu-section, .about-section {
+    padding: 60px 0;
+  }
+
+  .footer {
+    background: #333;
+    color: white;
+    padding: 40px 0;
+  }
+
+  .footer a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: #ddd;
+  }
+
+  /* تنسيقات عداد السلة */
+  .nav-icons .nav-link {
+    position: relative;
+  }
+
+  .nav-icons .badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50%;
+    background-color: #dc3545; /* لون الخلفية الأحمر */
+    color: white;
+  }
+
+  /* تنسيقات واجهة السلة */
+  .cart-overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .cart-overlay.active {
+    right: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cart-sidebar-overlay {
+    position: absolute;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background: white;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .cart-overlay.active .cart-sidebar-overlay {
+    right: 0;
+  }
+
+  .btn-close-cart {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }

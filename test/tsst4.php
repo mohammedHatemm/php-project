@@ -1,5 +1,4 @@
 <?php
-ob_start();
 session_start();
 require_once "../databasePHP/connection.php"; // تأكد من أن هذا الملف يحتوي على اتصال قاعدة البيانات
 
@@ -50,11 +49,10 @@ if (isset($_POST["registerBtn"])) {
                 $hashedPassword = password_hash($userPassword, PASSWORD_DEFAULT);
 
                 // التحقق من وجود المستخدم مسبقًا
-                $checkQuery = "SELECT * FROM users WHERE email = :userEmail OR username = :userName OR phone = :userPhone";
+                $checkQuery = "SELECT * FROM users WHERE email = :userEmail OR username = :userName";
                 $checkStatement = $connection->prepare($checkQuery);
                 $checkStatement->bindParam(':userEmail', $userEmail);
                 $checkStatement->bindParam(':userName', $userName);
-                $checkStatement->bindParam(':userPhone', $userPhone);
                 $checkStatement->execute();
 
                 if ($checkStatement->rowCount() > 0) {

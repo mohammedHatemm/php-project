@@ -27,7 +27,7 @@ if ($stmt) {
     <title>Becoffee - Menu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="mostafa.css" />
 </head>
 <body>
     <!-- Navbar -->
@@ -46,7 +46,7 @@ if ($stmt) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="../main-page/main.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../main-page/main.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
@@ -191,6 +191,6 @@ if ($stmt) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="products.js"></script>
+    <script src="crd.js"></script>
 </body>
 </html>

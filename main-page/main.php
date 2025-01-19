@@ -13,7 +13,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <!-- Navbar -->
@@ -47,7 +47,7 @@
               <a class="nav-link" href="#home">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../products/products.html">Menu</a>
+              <a class="nav-link" href="../testnew/index.php">Menu</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#about">About</a>
@@ -144,7 +144,7 @@
                 <span>24/7 Service</span>
               </div>
             </div>
-            <a href="../products/products.html" class="btn btn-primary btn-lg">Explore Menu</a>
+            <a href="../testnew/index.php" class="btn btn-primary btn-lg">Explore Menu</a>
           </div>
           <div class="col-lg-6">
             <img
@@ -274,7 +274,7 @@
                 </div>
               </div>
               <a
-                href="../products/products.html"
+                href="../testnew/index.php"
                 class="btn btn-primary btn-lg mt-4"
               >
                 <span>Explore Full Menu</span>
@@ -373,7 +373,7 @@
             <h5 class="mb-4 footer-title">quick links</h5>
             <ul class="footer-links">
               <li><a href="#home">Home</a></li>
-              <li><a href="../products/products.html">food list</a></li>
+              <li><a href="../testnew/index.php">food list</a></li>
               <li><a href="#about">about us</a></li>
               <li><a href="#contact">contact us</a></li>
               <li><a href="#">privacy policy</a></li>
@@ -424,6 +424,6 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-    <script src="products.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
