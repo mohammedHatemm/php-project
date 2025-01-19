@@ -1,10 +1,13 @@
-
 :root {
-  --primary-color: #87CEEB;
-  --secondary-color: #808080;
-  --dark-gray: #848484;   /* رمادي غامق */
-  --medium-gray: #443f3f;   /* رمادي متوسط */
-  --light-gray: #606060;    /* رمادي فاتح */
+  --primary-color: #87CEEB;    /* Light blue */
+  --secondary-color: #fffbfb;  /* Dark gray */
+  --background-color: #FFFFFF; /* White */
+  --text-color: #333333;      /* Changed to dark gray for text */
+  --heading-color: #87CEEB;    /* Light blue for headings */
+  --secondary-color: #fafafa;
+  --dark-gray: #ffffff;   
+  --medium-gray: #fdfdfd;   
+  --light-gray: #ffffff;    
 }
 
 body {
@@ -18,10 +21,12 @@ body {
   z-index: 1000;
   padding: 20px 0;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .navbar.scrolled {
   background: linear-gradient(45deg, var(--medium-gray), var(--dark-gray)) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   padding: 15px 0;
@@ -116,7 +121,7 @@ body {
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(51, 51, 51, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }
 
 @media (max-width: 991.98px) {
@@ -125,6 +130,7 @@ body {
       padding: 1rem;
       border-radius: 10px;
       margin-top: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
 
   .navbar-nav {
@@ -166,6 +172,7 @@ body {
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
+  color: #FFFFFF;
 }
 
 .btn-primary:hover {
@@ -226,7 +233,7 @@ body {
 
 /* تحسين تنسيقات Footer */
 footer {
-  background: linear-gradient(45deg, var(--medium-gray), var(--dark-gray)) !important;
+  background: #FFFFFF !important;
   position: relative;
   overflow: hidden;
 }
@@ -242,7 +249,7 @@ footer::before {
 }
 
 .footer-title {
-  color: var(--primary-color);
+  color: var(--heading-color);
   font-weight: 600;
   position: relative;
   padding-bottom: 15px;
@@ -262,7 +269,7 @@ footer::before {
 }
 
 .footer-info p {
-  color: #e0e0e0;
+  color: var(--text-color);
   transition: all 0.3s ease;
   padding: 8px 0;
   display: flex;
@@ -300,7 +307,7 @@ footer::before {
 }
 
 .footer-links a {
-  color: #e0e0e0;
+  color: var(--text-color);
   text-decoration: none;
   transition: all 0.3s ease;
   display: flex;
@@ -336,7 +343,7 @@ footer::before {
 }
 
 .footer-hours p {
-  color: #e0e0e0;
+  color: var(--text-color);
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -583,8 +590,8 @@ footer::before {
 .features-section,
 .menu-section,
 .about-section {
+  background: var(--background-color);
   position: relative;
-  background: url('./istockphoto-1667914729-612x612.jpg') center/cover fixed;
   background-size: 100% auto;
   z-index: 2;
   padding: 5rem 0;
@@ -610,9 +617,9 @@ footer::before {
 .feature-box,
 .menu-feature-item,
 .about-feature-item {
-  background: rgba(64, 64, 64, 0.5);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #EFEFEF;
   padding: 2rem;
   border-radius: 15px;
   transition: all 0.3s ease;
@@ -646,7 +653,7 @@ footer::before {
 .feature-box h4,
 .menu-feature-item h5,
 .about-feature-item h5 {
-  color: var(--primary-color);
+  color: var(--heading-color);
   margin-bottom: 1rem;
   font-size: 1.25rem;
   text-align: center;
@@ -655,7 +662,7 @@ footer::before {
 .feature-box p,
 .menu-feature-item p,
 .about-feature-item p {
-  color: #f0f0f0;
+  color: var(--text-color);
   margin-bottom: 0;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -751,9 +758,8 @@ footer::before {
 }
 
 .navbar-brand:hover .logo-text {
-  background: linear-gradient(45deg, var(--primary-color), #fff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--primary-color);
+  -webkit-text-fill-color: var(--primary-color);
 }
 
 /* تنسيقات عامة للأقسام */
@@ -777,7 +783,7 @@ footer::before {
 
 /* Menu Section Styling */
 .menu-section {
-  background: linear-gradient(45deg, #1a1a1a, #2d2d2d, #1a1a1a);
+  background: var(--background-color);
   position: relative;
 }
 
@@ -854,19 +860,19 @@ footer::before {
 }
 
 .menu-feature-item h5 {
-  color: var(--primary-color);
+  color: var(--heading-color);
   margin-bottom: 0.3rem;
 }
 
 .menu-feature-item p {
-  color: #e0e0e0;
+  color: var(--text-color);
   margin-bottom: 0;
   font-size: 0.9rem;
 }
 
 /* About Section Styling */
 .about-section {
-  background: linear-gradient(45deg, #1a1a1a, #2d2d2d, #1a1a1a);
+  background: var(--background-color);
   position: relative;
 }
 
@@ -922,12 +928,12 @@ footer::before {
 }
 
 .about-feature-item h5 {
-  color: var(--primary-color);
+  color: var(--heading-color);
   margin-bottom: 0.3rem;
 }
 
 .about-feature-item p {
-  color: #e0e0e0;
+  color: var(--text-color);
   margin-bottom: 0;
   font-size: 0.9rem;
 }
@@ -947,7 +953,7 @@ footer::before {
 /* تنسيقات مشتركة للأقسام */
 .menu-section,
 .about-section {
-  background: linear-gradient(45deg, var(--medium-gray), var(--dark-gray));
+  background: var(--background-color);
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -1044,14 +1050,14 @@ footer::before {
 /* تنسيقات النصوص */
 .menu-feature-item h5,
 .about-feature-item h5 {
-  color: var(--primary-color);
+  color: var(--heading-color);
   font-size: 1.3rem;
   margin-bottom: 1rem;
 }
 
 .menu-feature-item p,
 .about-feature-item p {
-  color: #e0e0e0;
+  color: var(--text-color);
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -1136,7 +1142,7 @@ footer::before {
 }
 
 .products-section {
-  background: linear-gradient(45deg, var(--medium-gray), var(--dark-gray));
+  background: var(--background-color);
   padding: 4rem 0;
   min-height: 100vh;
 }
@@ -1248,13 +1254,13 @@ footer::before {
 }
 
 .product-title {
-  color: var(--primary-color);
+  color: var(--heading-color);
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
 .product-description {
-  color: #e0e0e0;
+  color: var(--text-color);
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
@@ -1392,7 +1398,7 @@ footer::before {
 .hero-section {
     position: relative;
     min-height: 100vh;
-    background: url('../product-img/66782a3f20ce4051506907.jpg') center/cover fixed;
+    background: url('./background 2.jpg') center/cover fixed;
     padding: 0;
     overflow: hidden;
     display: flex;
@@ -1400,16 +1406,11 @@ footer::before {
 }
 
 .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: linear-gradient(
-        45deg,
-        rgba(0, 0, 0, 0.8),
-        rgba(0, 0, 0, 0.6)
-    );
+    45deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.8)
+  );
 }
 
 .hero-content {
@@ -1417,7 +1418,7 @@ footer::before {
     z-index: 2;
     color: white;
     padding: 2rem;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 20px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1475,7 +1476,7 @@ footer::before {
 
 .floating-card {
     position: absolute;
-    background: rgba(255, 255, 255, 0.95);
+    background: #FFFFFF;
     padding: 1rem 1.5rem;
     border-radius: 15px;
     display: flex;
@@ -1561,13 +1562,13 @@ footer::before {
 
 /* تحسين قسم الميزات لجعله أكثر جاذبية */
 .features-section {
-  background: linear-gradient(45deg, rgba(135, 206, 235, 0.1), rgba(64, 64, 64, 0.85));
+  background: var(--background-color);
   padding: 5rem 0;
 }
 
 .feature-box {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #FFFFFF;
+  border: 1px solid #EFEFEF;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
@@ -1589,7 +1590,7 @@ footer::before {
 
 /* تحسين قسم "عنّا" */
 .about-section {
-  background: linear-gradient(45deg, var(--medium-gray), var(--dark-gray));
+  background: var(--background-color);
   padding: 6rem 0;
   position: relative;
   overflow: hidden;
@@ -1612,7 +1613,7 @@ footer::before {
 
 /* تحسين قسم القائمة */
 .menu-section {
-  background: linear-gradient(45deg, var(--medium-gray), var(--dark-gray));
+  background: var(--background-color);
   padding: 6rem 0;
   position: relative;
   overflow: hidden;
@@ -1631,4 +1632,58 @@ footer::before {
 
 .menu-image-container:hover .menu-image {
   transform: scale(1.05);
+}
+
+/* Override text colors for paragraphs and text elements */
+p,
+.lead,
+.feature-box p,
+.menu-feature-item p,
+.about-feature-item p,
+.product-description,
+.footer-info p,
+.footer-links a,
+.footer-hours p,
+.cart-item p,
+.message-content p {
+  color: #495057;
+}
+
+/* تحديث ألوان النصوص للعناصر المحددة */
+.lead.text-light,
+.lead.mb-4,
+.feature span,
+.header-features .feature span {
+  color: var(--text-color) !important;
+}
+
+/* Override for any other text-light classes that need to be dark */
+.text-light {
+  color: var(--text-color) !important;
+}
+
+/* تحديث ألوان النصوص والأيقونات في الميزات */
+.hero-feature span {
+  color: var(--text-color) !important;
+}
+
+.hero-feature i,
+.feature i,
+.fas.fa-coffee,
+.fas.fa-cookie,
+.fas.fa-star {
+  color: var(--primary-color) !important;
+}
+
+/* تأكيد التنسيقات للعناصر المحددة */
+.floating-card span,
+.menu-feature-item span,
+.about-feature-item span {
+  color: var(--text-color);
+}
+
+.floating-card i,
+.menu-feature-item i:not(.feature-icon i),
+.about-feature-item i:not(.feature-icon i) {
+  color: var(--primary-color);
 }
