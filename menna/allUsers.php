@@ -1,9 +1,23 @@
-
-
 <?php
-// بدء الجلسة
 session_start();
-require_once '../databasePHP/connection.php';
+ require_once '../databasePHP/connection.php';
+//   if (!isset($_SESSION['users'])) {
+//     $_SESSION['users'] = [];
+// }
+
+// $users = $_SESSION[''];
+// echo ($users);
+//  print_r($_SESSION['user_role'] =='user');
+//   die();
+
+ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'user') {
+
+    header("Location:../main-page/main.php");
+    exit();
+
+//      print_r($_SESSION['user_role']);
+//   die();
+}
 $query = "select * from users";
 
 // var_dump($users);
@@ -79,8 +93,3 @@ include('header.php');
     <?php include('footer.php'); ?>
 </body>
 </html>
-
-
-
- <!-- <a href="editUser.php?id=<?php echo $user['user_id']; ?>" class="btn edit"><img src="images\edit.png" alt="" width="17px" hight="26px"></a> -->
-                        <!-- <td><?php echo $user['user_img']; ?></td> -->

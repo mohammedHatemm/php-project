@@ -1,10 +1,4 @@
  <?php
-
-
-
-
-
-
 session_start();
 require_once "../databasePHP/connection.php";
 

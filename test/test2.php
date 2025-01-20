@@ -1,57 +1,97 @@
 <?php
-require_once '../databasePHP/connection.php';
+header('Content-Type: application/json; charset=utf-8');
 
-session_start();
+try {
+    require_once('../databasePHP/connection.php');
 
-// التحقق من أن الطلب هو POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // قراءة البيانات المرسلة
-    $json = file_get_contents('php://input');
-    $cart = json_decode($json, true);
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception('Method not allowed');
+    }
 
-    if (is_array($cart)) {
-        try {
-            // بدء معاملة (transaction) لضمان سلامة البيانات
-            $connection->beginTransaction();
+    if (!isset($_POST['user_id']) || !isset($_POST['Product_id']) || !isset($_POST['quantity'])) {
+        throw new Exception('Missing required data');
+    }
 
-            // حساب المجموع الكلي للطلب
-            $totalPrice = array_reduce($cart, function($sum, $item) {
-                return $sum + ($item['price'] * $item['quantity']);
-            }, 0);
+    $user_id = intval($_POST['user_id']);
+    $Product_ids = $_POST['Product_id'];
+    $quantities = $_POST['quantity'];
 
-            // إدراج الطلب في جدول الطلبات
-            $stmt = $connection->prepare("INSERT INTO orders (user_id, total_price, order_date) VALUES (:user_id, :total_price, NOW())");
-            $stmt->execute([
-                ':user_id' => $_SESSION['user_id'], // يمكنك تعديل هذا ليتناسب مع نظام المستخدمين الخاص بك
-                ':total_price' => $totalPrice
-            ]);
+    if ($user_id <= 0) {
+        throw new Exception('Invalid user ID');
+    }
 
-            $orderId = $connection->lastInsertId(); // الحصول على معرف الطلب الجديد
+    // بدء المعاملة
+    $connection->beginTransaction();
 
-            // إدراج تفاصيل الطلب في جدول تفاصيل الطلبات
-            $stmt = $connection->prepare("INSERT INTO order_details (order_id, product_id, quantity, price) VALUES (:order_id, :product_id, :quantity, :price)");
-            foreach ($cart as $item) {
-                $stmt->execute([
-                    ':order_id' => $orderId,
-                    ':product_id' => $item['id'],
-                    ':quantity' => $item['quantity'],
-                    ':price' => $item['price']
-                ]);
+    try {
+        // إنشاء الطلب الرئيسي أولاً في جدول order
+        $orderStmt = $connection->prepare('
+            INSERT INTO order (user_id, DateOrder)
+            VALUES (:user_id, NOW())
+        ');
+
+        $orderStmt->execute([':user_id' => $user_id]);
+        $orderId = $connection->lastInsertId();
+
+        // إضافة المنتجات إلى جدول order_items
+        $itemStmt = $connection->prepare('
+            INSERT INTO order_items (OrderID, Product_id, quantity)
+            VALUES (:OrderID, :Product_id, :quantity)
+        ');
+
+        // إضافة كل منتج إلى الطلب
+        foreach ($Product_ids as $index => $Product_id) {
+            $Product_id = intval($Product_id);
+            $quantity = intval($quantities[$index]);
+
+            if ($Product_id <= 0 || $quantity <= 0) {
+                throw new Exception('Invalid product data');
             }
 
-            // إتمام المعاملة
-            $connection->commit();
+            // إضافة المنتج إلى order_items
+            $success = $itemStmt->execute([
+                ':OrderID' => $orderId,
+                ':Product_id' => $Product_id,
+                ':quantity' => $quantity
+            ]);
 
-            // إرسال استجابة نجاح
-            echo json_encode(['success' => true, 'message' => 'تمت عملية الطلب بنجاح.']);
-        } catch (PDOException $e) {
-            // التراجع عن المعاملة في حالة حدوث خطأ
-            $connection->rollBack();
-            echo json_encode(['success' => false, 'message' => 'خطأ في قاعدة البيانات: ' . $e->getMessage()]);
+            if (!$success) {
+                throw new Exception('Failed to insert order item');
+            }
         }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'بيانات غير صالحة.']);
+
+        // حساب وتحديث السعر الإجمالي للطلب
+        $updateTotalStmt = $connection->prepare('
+            UPDATE order o
+            SET TotalPrice = (
+                SELECT SUM(oi.quantity * p.Price)
+                FROM order_items oi
+                JOIN products p ON oi.Product_id = p.Product_id
+                WHERE oi.OrderID = o.OrderID
+            )
+            WHERE o.OrderID = :OrderID
+        ');
+
+        $updateTotalStmt->execute([':OrderID' => $orderId]);
+
+        $connection->commit();
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Order placed successfully',
+            'orderId' => $orderId
+        ]);
+
+    } catch (Exception $e) {
+        $connection->rollBack();
+        throw $e;
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'طريقة الطلب غير صالحة.']);
+
+} catch (Exception $e) {
+    error_log('Checkout error: ' . $e->getMessage());
+    echo json_encode([
+        'success' => false,
+        'message' => $e->getMessage()
+    ]);
 }
+?>

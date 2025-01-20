@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../databasePHP/connection.php';
-require_once "../databasePHP/addcart.php";
+// require_once "../databasePHP/addcart.php";
 
 
 // تهيئة السلة إذا لم تكن موجودة
@@ -59,7 +59,7 @@ if ($stmt) {
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
-                <div class="nav-icons">
+                <!-- <div class="nav-icons">
                     <a href="#" class="nav-link d-inline-block me-3" onclick="toggleCart()">
                         <i class="fas fa-shopping-cart"></i>
                         <span id="cart-count-overlay" class="badge bg-primary">0</span>
@@ -67,7 +67,26 @@ if ($stmt) {
                     <a href="#" onclick="redirectUser()" class="nav-link d-inline-block">
                         <i class="fas fa-user"></i>
                     </a>
-                </div>
+                </div> -->
+
+
+                <div class="nav-icons">
+                    <a href="#" class="nav-link d-inline-block me-3" onclick="toggleCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count-overlay" class="badge bg-primary">0</span>
+                    </a>
+                <div class="dropdown">
+    <a href="#" class="nav-link d-inline-block dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-user"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li><a class="dropdown-item" href="../menna/allUsers.php">admin</a></li>
+        <li><a class="dropdown-item" href="../">user</a></li>
+        <li><a class="dropdown-item" href="../menna/logout.php">logout</a></li>
+    </ul>
+</div>
+</div>
+
             </div>
         </div>
     </nav>
@@ -222,6 +241,6 @@ if ($stmt) {
 
 
     <script src="crd.js"></script>
-    <script src="../test/test.js"></script>
+    <!-- <script src="../test/test.js"></script> -->
 </body>
 </html>

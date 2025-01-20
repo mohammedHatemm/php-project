@@ -132,7 +132,7 @@ async function checkout() {
     }
 
     try {
-        const response = await fetch('../databasePHP/addcart.phpaddcart.php', {
+        const response = await fetch('../databasePHP/addcart.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

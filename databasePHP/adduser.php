@@ -2,7 +2,7 @@
 
 
 
-session_start();
+// session_start();
 require_once "connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -85,4 +85,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("location:../menna/allUsers.php?message=" . urlencode("User added successfully!"));
     exit();
 }
-?> 
+?>
