@@ -1,7 +1,8 @@
 <html>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <link rel="stylesheet" href="css/navbar.css" />
-    <link href="https://fonts.googleapis.com/css?family=Odibee+Sans&display=swap" rel="../menna/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Odibee+Sans&display=swap" rel="style.css">
+    <link rel="stylesheet" href="../nave/nave.css" class="css">
 
     <div class="nav-bar">
         <div class="left-nav">
@@ -13,7 +14,7 @@
             <a href="../menna/index.php">Products</a>
 
             <span>|</span>
-            <a href="allUsers.php">Users</a>
+            <a href="../menna/allUsers.php">Users</a>
             <span>|</span>
             <a href="../rwda/test2.php">Manual Order</a>
             <span>|</span>

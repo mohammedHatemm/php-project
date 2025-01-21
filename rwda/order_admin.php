@@ -1,11 +1,17 @@
-
-
-
-
-
 <?php
+
 require_once '../databasePHP/connection.php';
 require_once '../databasePHP/userdata.php';
+
+
+
+
+// التحقق من وجود user_id في الرابط
+$user_id = $_GET['user_id'] ?? null;
+
+if (!$user_id) {
+    die("User ID is missing!");
+}
 
 // الاستعلام الرئيسي لجلب الطلبات
 $query = "
@@ -23,12 +29,15 @@ $query = "
         orders o
         JOIN users u ON o.user_id = u.user_id
         JOIN products p ON o.product_id = p.product_id
+    WHERE
+        o.user_id = :user_id
     ORDER BY
         o.order_date DESC
 ";
 
 try {
     $statement = $connection->prepare($query);
+    $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $statement->execute();
     $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
@@ -48,27 +57,12 @@ try {
 </head>
 <body>
 
-<nav class="navbar">
-    <div>
-        <a href="#">Home</a>
-        <a href="#">Products</a>
-        <a href="#">Users</a>
-        <a href="#">Manual Order</a>
-        <a href="#">Checks</a>
-    </div>
-
-    <div class="admin-icon">
-        <i class="bi bi-person-circle" style="font-size: 1.5rem; margin-right: 5px;"></i>
-        <span>Admin</span>
-        <div class="logout" style="display: flex; align-items: center; margin-left: 15px; cursor: pointer;">
-            <i class="bi bi-box-arrow-right" style="font-size: 1.5rem; margin-right: 5px;"></i>
-            <span>Log out</span>
-        </div>
-    </div>
-</nav>
+<?php
+require_once "../nave/nave.php";
+?>
 
 <div class="table-container">
-    <h2 class="text-center mb-4">Orders</h2>
+    <h2 class="text-center mb-4">Orders for User ID: <?php echo htmlspecialchars($user_id); ?></h2>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -110,9 +104,6 @@ try {
             try {
                 const response = await fetch(`deliver_order.php?order_id=${orderId}`);
                 const data = await response.json();
-                if ($role === 'admin') {
-                    
-
                 if (data.success) {
                     alert("Order delivered successfully!");
                     location.reload();

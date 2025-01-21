@@ -5,9 +5,6 @@
 require_once '../databasePHP/login.php';
 require_once '../databasePHP/connection.php';
 
-
-
-
 ?>
 
 
@@ -73,13 +70,20 @@ require_once '../databasePHP/connection.php';
 
           <!-- Right icons -->
           <div class="nav-icons">
-            <a href="#" class="nav-link d-inline-block me-3" >
-              <i class="fas fa-shopping-cart"></i>
-            </a>
-            <a href="#" class="nav-link d-inline-block" onclick="userprofile()">
-              <i class="fas fa-user" ></i>
-            </a>
-          </div>
+                    <a href="#" class="nav-link d-inline-block me-3" onclick="toggleCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count-overlay" class="badge bg-primary">0</span>
+                    </a>
+                <div class="dropdown">
+    <a href="#" class="nav-link d-inline-block dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-user"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li><a class="dropdown-item" href="../menna/allUsers.php">admin</a></li>
+        <li><a class="dropdown-item" href="../testnew/userorder.php">user</a></li>
+        <li><a class="dropdown-item" href="../menna/logout.php">logout</a></li>
+    </ul>
+</div>
         </div>
       </div>
     </nav>

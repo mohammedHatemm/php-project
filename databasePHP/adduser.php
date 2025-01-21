@@ -1,28 +1,24 @@
- <?php
-
-
-
-// session_start();
+<?php
+session_start();
 require_once "connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // جمع البيانات من النموذج
+    // Collect data from the form
     $username = $_POST['username'] ?? null;
     $email = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
     $phone = $_POST['userphone'] ?? null;
     $role = $_POST['role'] ?? 'user';
     $userimg = $_FILES['userimg'] ?? null;
-    $roomNum = $_POST["roomnum"] ?? null;
+    $roomNum = $_POST['room_num'] ?? null;
 
-
-    // التحقق من صحة البريد الإلكتروني
+    // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         header("location:../addUser.php?message=" . urlencode("Invalid email format."));
         exit();
     }
 
-    // تحميل الصورة إذا تم تحميلها
+    // Handle image upload
     $uploadFilePath = null;
     if (isset($userimg) && $userimg['error'] == 0) {
         $allowedTypes = ["image/jpeg", "image/png", "image/gif"];
@@ -45,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("location:../addUser.php?message=" . urlencode("Invalid file type. Only JPEG, PNG, and GIF are allowed."));
             exit();
         }
-    }else {
-        $userImagePath = $defaultImage; // استخدام الصورة الافتراضية
+    } else {
+        $uploadFilePath = "../uploads/default.png"; // Use a default image if no image is uploaded
     }
 
-    // تشفير كلمة المرور
+    // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // التحقق من عدم وجود مستخدم بنفس البريد الإلكتروني أو اسم المستخدم
+    // Check if the user already exists
     $checkQuery = "SELECT * FROM users WHERE email = :email OR username = :username";
     $checkStatement = $connection->prepare($checkQuery);
     $checkStatement->bindParam(':email', $email);
@@ -63,26 +59,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("location:../addUser.php?message=" . urlencode("User with this email or username already exists."));
         exit();
     }
-    if ($userRole === 'user' && empty($roomNum)) {
-        header("location:test2.php?message=" . urlencode("The room number is empty"));
+
+    // Validate room number for users
+    if ($role === 'user' && empty($roomNum)) {
+        header("location:../addUser.php?message=" . urlencode("The room number is required for users."));
         exit();
     }
 
-    // إدخال المستخدم الجديد في قاعدة البيانات
-    $query = "INSERT INTO users (username, password, email, phone, role, user_img, room_num) VALUES (:userName, :userPassword, :userEmail, :userPhone, :userRole, :userImg, :roomNum)";
+    // Insert the new user into the database
+    $query = "INSERT INTO users (username, password, email, phone, role, user_img, room_num) VALUES (:username, :password, :email, :phone, :role, :user_img, :room_num)";
     $statement = $connection->prepare($query);
 
-    $statement->bindParam(':userName', $userName);
-    $statement->bindParam(':userPassword', $hashedPassword);
-    $statement->bindParam(':userEmail', $userEmail);
-    $statement->bindParam(':userPhone', $userPhone);
-    $statement->bindParam(':userRole', $userRole);
-    $statement->bindParam(':userImg', $userImagePath); // استخدام المسار الصحيح للصورة
-    $statement->bindParam(':roomNum', $roomNum); // إذا كان المستخدم "admin" سيكون room_num = null
+    $statement->bindParam(':username', $username);
+    $statement->bindParam(':password', $hashedPassword);
+    $statement->bindParam(':email', $email);
+    $statement->bindParam(':phone', $phone);
+    $statement->bindParam(':role', $role);
+    $statement->bindParam(':user_img', $uploadFilePath);
+    $statement->bindParam(':room_num', $roomNum);
 
-    $statement->execute();
-
-    header("location:../menna/allUsers.php?message=" . urlencode("User added successfully!"));
-    exit();
+    if ($statement->execute()) {
+        header("location:../menna/allUsers.php?message=" . urlencode("User added successfully!"));
+        exit();
+    } else {
+        header("location:../addUser.php?message=" . urlencode("Error adding user."));
+        exit();
+    }
 }
 ?>

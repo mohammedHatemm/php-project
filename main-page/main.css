@@ -12,6 +12,36 @@ body {
   direction: ltr !important;
 }
 
+
+
+.navbar {
+  padding: 10px 0;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+ /* المسافة بين الأيقونات */
+}
+
+/* تنسيقات أيقونة المستخدم */
+.nav-link.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* المسافة بين الأيقونة والنص */
+  color: #333; /* لون النص */
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link.dropdown-toggle:hover {
+  background-color: #f8f9fa; /* لون الخلفية عند التحويم */
+}
+
+
 .navbar {
   background: transparent !important;
   position: absolute;

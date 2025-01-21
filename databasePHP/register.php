@@ -1,8 +1,4 @@
  <?php
-
-
-
-
 session_start();
 require_once "../databasePHP/connection.php"; // تأكد من أن هذا الملف يحتوي على اتصال قاعدة البيانات
 
@@ -94,7 +90,7 @@ if (isset($_POST["registerBtn"])) {
             exit();
         }
 
-        // إدخال المستخدم الجديد في قاعدة البيانات
+        // إدخال المستخدم الجديد في قاعدة
         $query = "INSERT INTO users (username, password, email, phone, role, user_img, room_num) VALUES (:userName, :userPassword, :userEmail, :userPhone, :userRole, :userImg, :roomNum)";
         $statement = $connection->prepare($query);
 

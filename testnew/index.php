@@ -20,11 +20,11 @@ if ($stmt) {
     $products = $stmt->fetchAll(); // جلب جميع الصفوف كـ array
     if (empty($products)) {
         // إذا لم توجد بيانات
-        echo "<p class='text-center text-danger'>لا توجد منتجات في قاعدة البيانات.</p>";
+        echo "<p class='text-center text-danger'> no products in database</p>";
     }
 } else {
     // إذا كان هناك خطأ في الاستعلام
-    echo "<p class='text-center text-danger'>خطأ في جلب البيانات.</p>";
+    echo "<p class='text-center text-danger'>error</p>";
 }
 ?>
 <!DOCTYPE html>
@@ -59,15 +59,6 @@ if ($stmt) {
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
-                <!-- <div class="nav-icons">
-                    <a href="#" class="nav-link d-inline-block me-3" onclick="toggleCart()">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-count-overlay" class="badge bg-primary">0</span>
-                    </a>
-                    <a href="#" onclick="redirectUser()" class="nav-link d-inline-block">
-                        <i class="fas fa-user"></i>
-                    </a>
-                </div> -->
 
 
                 <div class="nav-icons">
@@ -81,7 +72,7 @@ if ($stmt) {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
         <li><a class="dropdown-item" href="../menna/allUsers.php">admin</a></li>
-        <li><a class="dropdown-item" href="../">user</a></li>
+        <li><a class="dropdown-item" href="../testnew/userorder.php">user</a></li>
         <li><a class="dropdown-item" href="../menna/logout.php">logout</a></li>
     </ul>
 </div>

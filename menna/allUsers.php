@@ -1,23 +1,15 @@
 <?php
 session_start();
  require_once '../databasePHP/connection.php';
-//   if (!isset($_SESSION['users'])) {
-//     $_SESSION['users'] = [];
-// }
 
-// $users = $_SESSION[''];
-// echo ($users);
-//  print_r($_SESSION['user_role'] =='user');
-//   die();
+session_start();
+if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'user') {
 
- if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'user') {
-
-    header("Location:../main-page/main.php");
-    exit();
-
-//      print_r($_SESSION['user_role']);
-//   die();
+   header("Location:../main-page/main.php");
+   exit();
 }
+
+
 $query = "select * from users";
 
 // var_dump($users);
@@ -27,16 +19,7 @@ $result->execute();
 $users = $result ->fetchAll(PDO ::FETCH_ASSOC);
 
 
-// $users = [
-//     ["id" => 1, "username" => "admin", "email" => "admin@Examlbe.com", "role" => "admin"],
-//     ["id" => 2, "username" => "user1", "email" => "user1@Example.com", "role" => "user"],
-// ];
-// if (!isset($_SESSION['users'])) {
-//     $_SESSION['users'] = [];
-// }
 
-// استرجاع بيانات المستخدمين من الجلسة
-// $users = $_SESSION['users'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +48,8 @@ include('header.php');
                     <th>Username</th>
                     <th>Email</th>
                     <th>Imge</th>
-                    <th>orders</th>
+                    <th>user </th>
+                    <th>delete</th>
 
                 </tr>
             </thead>
@@ -85,6 +69,7 @@ include('header.php');
 
                             <a href="../rwda/order_admin.php?id=<?php echo $user['user_id']; ?>" class="btn delete"></a>
                         </td>
+
                     </tr>
                 <?php endforeach; ?>
             </tbody>
