@@ -97,7 +97,7 @@ require_once "../nave/nave.php";
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-
+<!-- 
 <script>
     async function deliverOrder(orderId) {
         if (confirm("Are you sure you want to deliver this order?")) {
@@ -116,7 +116,7 @@ require_once "../nave/nave.php";
             }
         }
     }
-</script>
+</script> -->
 
 </body>
 </html>

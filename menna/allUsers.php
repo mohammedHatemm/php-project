@@ -2,10 +2,9 @@
 session_start();
  require_once '../databasePHP/connection.php';
 
-session_start();
 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'user') {
 
-   header("Location:../main-page/main.php");
+   header("Location:../testnew/index.php");
    exit();
 }
 
@@ -48,7 +47,7 @@ include('header.php');
                     <th>Username</th>
                     <th>Email</th>
                     <th>Imge</th>
-                    <th>user </th>
+                    <!-- <th>user </th> -->
                     <th>delete</th>
 
                 </tr>
@@ -61,14 +60,15 @@ include('header.php');
                         <td><?php echo $user['email']; ?></td>
 
                         <td>
+                        <a href="../menna/allUsers.php?id=<?=  $user['user_id'];?>" class="btn delete"><img src="<?php echo $user['user_img'];?>" alt="" width="17px" hight="26px"></a>
 
-                            <a href="deleteUser.php?id=<?php echo $user['user_id']; ?>" class="btn delete"><img src="<?php echo $user['user_img'];?>" alt="" width="17px" hight="26px"></a>
+
                         </td>
 
-                        <td>
-
-                            <a href="../rwda/order_admin.php?id=<?php echo $user['user_id']; ?>" class="btn delete"></a>
+                        <td class="action-icon">
+                       <a href="../menna/deleteUser.php?id=<?= $user['user_id'];?>" <i class="bi bi-trash" title="Delete">delete</i> </a>
                         </td>
+
 
                     </tr>
                 <?php endforeach; ?>

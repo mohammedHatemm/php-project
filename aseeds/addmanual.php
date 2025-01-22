@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['error_message'] = "Error saving order: " . $e->getMessage();
     }
 
-    header("Location:../test/test2.php");
+    header("Location:../rwda/test2.php");
     exit;
 }
 ?>

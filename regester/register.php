@@ -44,7 +44,7 @@
                 </select>
             </div>
             <div class="form-group" id="roomNumField">
-            <input type="number" name="room_num" placeholder="room number" >
+            <input type="number" name="roomnum" placeholder="room number" >
         </div>
             <div class="form-group">
                 <label for="profile_image">Profile Image:</label>

@@ -80,9 +80,9 @@ if ($result) {
                         <td><?php echo $product['category']; ?></td>
                         <td><?php echo $product['product_description'] ?></td>
                         <td><?php echo $product['price']; ?></td>
-                        <td>
+                        <td class="action-icons">
 
-
+                        <a href="../menna/deleteProduct.php?id=<?= $product['product_id'];?>" <i class="bi bi-trash" title="Delete">delete</i> </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

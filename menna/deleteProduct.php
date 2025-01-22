@@ -1,27 +1,19 @@
 <?php
+// session_start();
 
-session_start();
-$categories = ["Beveragees", "snacks", "Desserts"];
+require('../databasePHP/connection.php');
 
-if (!isset($_SESSION['products'])) {
-    $_SESSION['products'] = [];
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+$query= "delete from products where product_id = ?;";
+$statement = $connection->prepare($query);
+$statement->execute([$id]);
+
+
+
 }
-
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+header('Location:../menna/index.php');
 
 
-    foreach ($_SESSION['products'] as $key => $product) {
-        if ($product['id'] === $id) {
-            unset($_SESSION['products'][$key]);
-            break;
-        }
-    }
 
-
-    $_SESSION['products'] = array_values($_SESSION['products']);
-}
-
-header("Location: index.php");
-exit();
 ?>

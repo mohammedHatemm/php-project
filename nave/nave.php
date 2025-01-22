@@ -6,7 +6,7 @@
 
     <div class="nav-bar">
         <div class="left-nav">
-            <a href="../main-page/main.php">Home</a>
+            <a href="../test/test.php">Home</a>
             <span>|</span>
             <a href="../testnew/index.php">menue</a>
 

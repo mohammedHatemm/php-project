@@ -31,16 +31,16 @@ async function sendCartToServer() {
         const result = await response.json();
 
         if (result.status === 'success') {
-            showToast("تم إرسال بيانات السلة بنجاح!");
+            showToast("data has been sent sucssesfully");
             cart = []; // إفراغ السلة
             updateCartUI(); // تحديث واجهة السلة
             localStorage.removeItem('cart'); // إزالة السلة من Local Storage
         } else {
-            showToast(result.message || "حدث خطأ أثناء إرسال البيانات");
+            showToast(result.message || "error with sending data ");
         }
     } catch (error) {
         console.error('Error:', error);
-        showToast("حدث خطأ في النظام");
+        showToast("error with sending data ");
     }
 }
 
@@ -55,7 +55,7 @@ function addToCart(productId, productName, productPrice, product_img) {
     }
 
     updateCartUI();
-    showToast("تمت إضافة المنتج إلى السلة");
+    showToast("product added to cart");
     saveCartToLocalStorage(); // حفظ السلة في Local Storage
 }
 
