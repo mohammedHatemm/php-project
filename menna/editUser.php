@@ -1,17 +1,12 @@
 <?php
-// بدء الجلسة
-session_start();
 
-// إذا لم تكن مصفوفة المستخدمين موجودة في الجلسة، قم بإنشائها
+session_start();
 if (!isset($_SESSION['users'])) {
     $_SESSION['users'] = [];
 }
-
-// البحث عن المستخدم المطلوب بناءً على الـ ID
 $user = null;
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); // تحويل الـ ID إلى عدد صحيح
-
+    $id = intval($_GET['id']); 
     foreach ($_SESSION['users'] as $u) {
         if ($u['id'] === $id) {
             $user = $u;
@@ -20,7 +15,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-// إذا لم يتم العثور على المستخدم، قم بإعادة التوجيه إلى صفحة allUsers.php
 if (!$user) {
     header("Location: allUsers.php");
     exit();

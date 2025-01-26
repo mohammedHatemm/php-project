@@ -120,10 +120,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     </style>
 </head>
-<body class="bg-light">
-    <?php include('navbar.html'); ?>
-    <?php include('header.php'); ?>
+<body>
+<?php
+ include('navbar.html') ;
+include('header.php');
 
+?>
     <div class="container">
         <h1 class="text-center mb-4">Add Product</h1>
 
@@ -175,23 +177,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </form>
     </div>
-
     <?php include('footer.php'); ?>
-
-    <script>
-        function previewImage(input) {
-            const preview = document.getElementById('imagePreview');
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('d-none');
-                }
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                preview.classList.add('d-none');
-            }
-        }
-    </script>
 </body>
 </html>
