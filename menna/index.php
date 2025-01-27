@@ -36,7 +36,9 @@ if ($result) {
 
 <body>
     <?php
-    include('navbar.html');
+    require_once "../nave/nave.php";
+
+    // include('navbar.html');
     include('header.php');
 
     // $products = isset($_SESSION['products']) ? $_SESSION['products'] : [];

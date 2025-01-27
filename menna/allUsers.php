@@ -31,8 +31,9 @@ $users = $result ->fetchAll(PDO ::FETCH_ASSOC);
 
 <body>
 <?php
-include('navbar.html') ;
-include('header.php');
+// include('navbar.html') ;
+require_once "../nave/nave.php";
+// include('header.php');
 
 
  ?>

@@ -26,7 +26,7 @@ if (isset($_POST["btnLogin"])) {
         if ($result["role"] === "admin") {
             header("location:../menna/allUsers.php");
         } else {
-            header("location: ../main-page/main.php"); // لوحة تحكم المستخدمين
+            header("location: ../test/test.php"); // لوحة تحكم المستخدمين
         }
         exit();
     } else {
